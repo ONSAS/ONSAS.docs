@@ -20,6 +20,6 @@ makedocs(
 )
 
 deploydocs(
-    repo = "github.com/ONSAS/ONSAS_Tutorials.jl.git",
+    repo = "github.com/ONSAS/ONSAS_Tutorials.git",
     push_preview=true
 )
