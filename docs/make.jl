@@ -7,7 +7,7 @@ DocMeta.setdocmeta!(ONSAS_Tutorials, :DocTestSetup,
 include("generate.jl")
 
 makedocs(
-    sitename = "ONSAS_Tutorials.jl",
+    sitename = "ONSAS_Tutorials",
     modules = [ONSAS_Tutorials],
     format = Documenter.HTML(prettyurls = get(ENV, "CI", nothing) == "true"),
     pages = [
@@ -20,6 +20,6 @@ makedocs(
 )
 
 deploydocs(
-    repo = "github.com/ONSAS/ONSAS_Tutorials.jl.git",
+    repo = "github.com/ONSAS/ONSAS_Tutorials.git",
     push_preview=true
 )
