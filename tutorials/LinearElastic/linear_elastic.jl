@@ -10,3 +10,6 @@
 # We begin by defining the structural properties of the mesh.
 
 # The material properties of the model are defined by the MELCS parameters.
+
+# This model can be solved analytically and the result shows a good match between
+# the analytic result and the numerical solution obtained with ONSAS.
