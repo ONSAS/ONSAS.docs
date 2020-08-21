@@ -6,3 +6,5 @@
 
 #md # !!! note "TO-DO"
 #md #     Continue the tutorial as in the [User Guide](https://www.fing.edu.uy/~jorgepz/onsas/mainUserGuide.html).
+
+# We begin by defining the structural properties of the mesh.
