@@ -12,7 +12,8 @@ makedocs(
     format = Documenter.HTML(prettyurls = get(ENV, "CI", nothing) == "true"),
     pages = [
         "Home" => "index.md",
-        "Tutorials" => Any["Linear elastic solid" => "tutorials/linear_elastic.md"
+        "Tutorials" => Any["Linear elastic solid" => "tutorials/linear_elastic.md",
+                           "Simple pendulum" => "tutorials/simple_pendulum.md"
                          ],
         "About" => "about.md"
     ],
