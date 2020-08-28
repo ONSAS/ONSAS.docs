@@ -1,9 +1,12 @@
 # generate examples
 import Literate
 
+# add new tutorials here
 MODELS = [
-    joinpath(@__DIR__, "..", "tutorials", "LinearElastic")
+    joinpath(@__DIR__, "..", "tutorials", "LinearElastic"),
+    joinpath(@__DIR__, "..", "tutorials", "SimplePendulum")
 ]
+
 GENERATEDDIR = joinpath(@__DIR__, "src", "tutorials")
 mkpath(GENERATEDDIR)
 for model in MODELS
