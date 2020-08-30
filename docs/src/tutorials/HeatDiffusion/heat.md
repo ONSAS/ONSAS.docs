@@ -31,7 +31,12 @@ T0 = ϕ.(xdom)
 plot(0:1e-3:1, ϕ, seriestype=:line, lab=L"\phi(x)",
      xlab=L"x", ylab=L"T", legend=:bottomright, title="Initial temperature profile")
 plot!(xdom, T0, seriestype = :scatter, lab=L"T(x=x_e, 0)")
+savefig("plot_initial_temperature.svg")
+
+nothing
 ```
+
+![](plot_initial_temperature.svg)
 
 The analytic solution in this case is
 
