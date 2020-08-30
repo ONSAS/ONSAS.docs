@@ -9,7 +9,7 @@ DocMeta.setdocmeta!(ONSAS_Tutorials, :DocTestSetup,
 makedocs(
     sitename = "ONSAS_Tutorials",
     modules = [ONSAS_Tutorials],
-    source="..",
+    #source="..",
     format = Documenter.HTML(prettyurls = get(ENV, "CI", nothing) == "true"),
     pages = [
         "Home" => "index.md",
