@@ -19,7 +19,7 @@ Consider the one-dimensional heat equation, $\partial_t T(x, t) = \alpha \partia
 T(x, t=0) = \phi(x) := \sin \pi x + \frac{1}{2}\sin 3\pi x
 ```
 
-```@example
+```@eval
 using Plots, LaTeXStrings
 
 ϕ(x) = sin(π*x) + sin(3π*x)/2
