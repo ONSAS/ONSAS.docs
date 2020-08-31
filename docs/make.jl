@@ -15,12 +15,15 @@ makedocs(
     format = Documenter.HTML(prettyurls = get(ENV, "CI", nothing) == "true"),
     pages = [
         "Home" => "index.md",
-        "Tutorials" => Any["Linear elastic solid" => "tutorials/LinearElastic/linear_elastic.md",
+        "About" => "about.md",
+        "Tutorials" => Any["Static Von-Mises Truss" =>  "tutorials/StaticVonMisesTruss/staticVonMisesTruss.md",
+                           "Linear elastic solid" => "tutorials/LinearElastic/linear_elastic.md",
                            "Simple pendulum" => "tutorials/SimplePendulum/simple_pendulum.md",
                            "Heat diffusion" => "tutorials/HeatDiffusion/heat.md"],
+        "Theory" => Any["Equations" => "theory/equations.md", 
+                        "Elements" => "theory/elements.md"],
+        "How to use it" => Any["Creating Models" => "howtouse/creatingModels.md"],
         "References" => "references.md",
-        "Elements" => Any["1DHeat" => "elements/1DHeat.md"],
-        "About" => "about.md"
     ],
     strict = false
 )
