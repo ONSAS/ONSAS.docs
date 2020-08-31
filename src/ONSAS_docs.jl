@@ -1,4 +1,4 @@
-module ONSAS-doc
+module ONSAS_docs
 
 greet() = print("Hello World!")
 
