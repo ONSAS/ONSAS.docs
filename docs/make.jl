@@ -1,7 +1,7 @@
 using Documenter, ONSAS_docs
 
-DocMeta.setdocmeta!(ONSAS_Tutorials, :DocTestSetup,
-                    :(using ONSAS_Tutorials); recursive=true)
+DocMeta.setdocmeta!(ONSAS_docs, :DocTestSetup,
+                    :(using ONSAS_docs); recursive=true)
 
 # Generate notebooks
 #include("generate.jl")
@@ -10,22 +10,25 @@ DocMeta.setdocmeta!(ONSAS_Tutorials, :DocTestSetup,
 include("bibliography.jl")
 
 makedocs(
-    sitename = "ONSAS_Tutorials",
-    modules = [ONSAS_Tutorials],
+    sitename = "ONSAS_docs",
+    modules = [ONSAS_docs],
     format = Documenter.HTML(prettyurls = get(ENV, "CI", nothing) == "true"),
     pages = [
         "Home" => "index.md",
-        "Tutorials" => Any["Linear elastic solid" => "tutorials/LinearElastic/linear_elastic.md",
+        "About" => "about.md",
+        "Tutorials" => Any["Static Von-Mises Truss" =>  "tutorials/StaticVonMisesTruss/staticVonMisesTruss.md",
+                           "Linear elastic solid" => "tutorials/LinearElastic/linear_elastic.md",
                            "Simple pendulum" => "tutorials/SimplePendulum/simple_pendulum.md",
                            "Heat diffusion" => "tutorials/HeatDiffusion/heat.md"],
+        "Theory" => Any["Equations" => "theory/equations.md", 
+                        "Elements" => "theory/elements.md"],
+        "How to use it" => Any["Creating Models" => "howtouse/creatingModels.md"],
         "References" => "references.md",
-        "Elements" => Any["1DHeat" => "elements/1DHeat.md"],
-        "About" => "about.md"
     ],
     strict = false
 )
 
 deploydocs(
-    repo = "github.com/ONSAS/ONSAS_Tutorials.git",
+    repo = "github.com/ONSAS/ONSAS_docs.git",
     push_preview=true
 )
