@@ -19,6 +19,7 @@ makedocs(
                            "Simple pendulum" => "tutorials/SimplePendulum/simple_pendulum.md",
                            "Heat diffusion" => "tutorials/HeatDiffusion/heat.md"],
         "References" => "references.md",
+        "Elements" => Any["1DHeat" => "elements/1DHeat.md"],
         "About" => "about.md"
     ],
     strict = false
