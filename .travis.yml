@@ -33,7 +33,8 @@ jobs:
       os: linux
       script:
         - julia --project --color=yes --check-bounds=yes -e 'using Pkg; Pkg.instantiate()';
-        - julia --project=docs/ -e 'using Pkg; Pkg.develop(PackageSpec(path=pwd()));
+        - julia --project=docs/ -e 'using Pkg; Pkg.add(url="https://github.com/lucianolorenti/BibTeXFormat.jl.git");
+                                               Pkg.develop(PackageSpec(path=pwd()));
                                                Pkg.instantiate();'
         - travis_wait 25 julia --project=docs/ docs/make.jl
       after_success: skip

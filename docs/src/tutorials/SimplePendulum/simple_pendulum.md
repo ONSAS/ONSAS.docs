@@ -3,7 +3,7 @@
 ## Model
 
 In this tutorial we study a simple pendulum. The model
-has one truss element. This model is taken from [^BATHE].
+has one truss element. This model is taken from [[BAT14]](@ref).
 
 |Parameter | Value|
 |-------|----|
@@ -18,7 +18,3 @@ has one truss element. This model is taken from [^BATHE].
 
 !!! note "TO-DO"
     Add results.
-
-## References
-
-[^BATHE]: Bathe, Klaus-Jürgen. Finite element procedures. Klaus-Jurgen Bathe, 2006.
