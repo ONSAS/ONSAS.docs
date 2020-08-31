@@ -3,19 +3,22 @@ using Documenter, ONSAS_Tutorials
 DocMeta.setdocmeta!(ONSAS_Tutorials, :DocTestSetup,
                     :(using ONSAS_Tutorials); recursive=true)
 
-# Generate tutorials
+# Generate notebooks
 #include("generate.jl")
+
+# Generate bibliography
+include("bibliography.jl")
 
 makedocs(
     sitename = "ONSAS_Tutorials",
     modules = [ONSAS_Tutorials],
-    #source="..",
     format = Documenter.HTML(prettyurls = get(ENV, "CI", nothing) == "true"),
     pages = [
         "Home" => "index.md",
         "Tutorials" => Any["Linear elastic solid" => "tutorials/LinearElastic/linear_elastic.md",
                            "Simple pendulum" => "tutorials/SimplePendulum/simple_pendulum.md",
                            "Heat diffusion" => "tutorials/HeatDiffusion/heat.md"],
+        "References" => "references.md",
         "Elements" => Any["1DHeat" => "elements/1DHeat.md"],
         "About" => "about.md"
     ],
