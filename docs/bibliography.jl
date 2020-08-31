@@ -35,7 +35,7 @@ for ei in formatted_entries
     push!(contents, x)
 end
 
-BIBLIOGRAPHY = Dict(cites .=> contents)
+const BIBLIOGRAPHY = Dict(cites .=> contents)
 
 # write references markdown file
 refpath = joinpath(@__DIR__, "src/references.md")

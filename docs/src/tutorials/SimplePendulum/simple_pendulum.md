@@ -18,7 +18,3 @@ has one truss element. This model is taken from [[BAT14]](@ref).
 
 !!! note "TO-DO"
     Add results.
-
-# References
-
-```@bibliography```
