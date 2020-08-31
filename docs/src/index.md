@@ -32,8 +32,6 @@ The user should follow these steps to install and run ONSAS:
 1. Open GNU-Octave and run the _ONSAS.m_ script
 1. Select one of the available input files (or create one).
 
-We encourage the user to read the user's guide available at [https://www.fing.edu.uy/~jorgepz/onsas/mainUserGuide.html](https://www.fing.edu.uy/~jorgepz/onsas/mainUserGuide.html).
-
 ## Contributors and License
 
 The code is distributed under a GNU-GPL 3.0 license.
