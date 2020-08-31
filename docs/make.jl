@@ -1,6 +1,6 @@
-using Documenter, ONSAS_Tutorials
+using Documenter, ONSAS-doc
 
-DocMeta.setdocmeta!(ONSAS_Tutorials, :DocTestSetup,
+DocMeta.setdocmeta!(ONSAS-doc, :DocTestSetup,
                     :(using ONSAS_Tutorials); recursive=true)
 
 # Generate notebooks
@@ -10,8 +10,8 @@ DocMeta.setdocmeta!(ONSAS_Tutorials, :DocTestSetup,
 include("bibliography.jl")
 
 makedocs(
-    sitename = "ONSAS_Tutorials",
-    modules = [ONSAS_Tutorials],
+    sitename = "ONSAS-doc",
+    modules = [ONSAS-doc],
     format = Documenter.HTML(prettyurls = get(ENV, "CI", nothing) == "true"),
     pages = [
         "Home" => "index.md",
@@ -29,6 +29,6 @@ makedocs(
 )
 
 deploydocs(
-    repo = "github.com/ONSAS/ONSAS_Tutorials.git",
+    repo = "github.com/ONSAS/ONSAS-doc.git",
     push_preview=true
 )
