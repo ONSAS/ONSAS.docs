@@ -1,7 +1,7 @@
 using Documenter, ONSAS-doc
 
 DocMeta.setdocmeta!(ONSAS-doc, :DocTestSetup,
-                    :(using ONSAS_Tutorials); recursive=true)
+                    :(using ONSAS-doc); recursive=true)
 
 # Generate notebooks
 #include("generate.jl")
