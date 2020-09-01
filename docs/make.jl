@@ -10,7 +10,7 @@ DocMeta.setdocmeta!(ONSAS_docs, :DocTestSetup,
 include("bibliography.jl")
 
 makedocs(
-    sitename = "ONSAS_docs",
+    sitename = "ONSAS Documentation",
     modules = [ONSAS_docs],
     format = Documenter.HTML(prettyurls = get(ENV, "CI", nothing) == "true"),
     pages = [
