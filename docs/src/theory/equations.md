@@ -27,7 +27,7 @@ The PVT is given by:
 
 ```math
     \int_{\Omega} k \nabla T \cdot \nabla \delta T dV
-  + \int_{\Omega} \rho c \frac{\partial T}{\partial t} \delta T dS
+  + \int_{\Omega} \rho c \frac{\partial T}{\partial t} \delta T dV
   =
     \int_{\Omega} Q_h \delta T d V
   + \int_{\partial \Omega} k \nabla T \cdot \hat{\mathbf{n}} \delta T d S 
@@ -41,7 +41,9 @@ Considering the boundary conditions
 \begin{array}{lr}
 T(\mathbf{x},t) = f_D(t) & \text{on} \Gamma_D \\
 -k \frac{\partial T}{\partial n} (\mathbf{x},t) = f_N(t) & \text{on} \Gamma_N \\
-k \frac{\partial T}{\partial n} (\mathbf{x},t) = h \left( T(\mathbf{x},t)-T_\infty \right)  & \text{on} \Gamma_R
+-k \frac{\partial T}{\partial n} (\mathbf{x},t) = h \left( T(\mathbf{x},t)-T_\infty(t) \right)  & \text{on} \Gamma_R
 \end{array}
 \right.
 ```
+
+where $h$ is the convection coefficient and $T_\infty(t)$ is the ambient temperature at time $t$.
