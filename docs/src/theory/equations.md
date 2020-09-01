@@ -40,7 +40,7 @@ Considering the boundary conditions
 \left\{
 \begin{array}{lr}
 T(\mathbf{x},t) = f_D(t) & \text{on} \Gamma_D \\
-k \frac{\partial T}{\partial n} (\mathbf{x},t) = f_N(t) & \text{on} \Gamma_N \\
+-k \frac{\partial T}{\partial n} (\mathbf{x},t) = f_N(t) & \text{on} \Gamma_N \\
 k \frac{\partial T}{\partial n} (\mathbf{x},t) = h \left( T(\mathbf{x},t)-T_\infty \right)  & \text{on} \Gamma_R
 \end{array}
 \right.
