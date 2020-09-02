@@ -6,7 +6,12 @@ The structural models are defined through a set of variables definitions in a .m
 
 
 * Nodes: matrix with coordinates
-* Conec: cell structure with the connectivity
+* Conec: cell structure with the connectivity information. The $i$-th entry has the vector with the MELCS indexes and the nodes of the element.
+```math
+[ MaterialIndex, \, ElementIndex, \, LoadIndex, \, CrossSectionIndex, \, SpringIndex, \, Node_1 \dots Node_{n} ]
+```
+where the five indexes are natural numbers and the $0$ index can be used if noproperty is assigned, and $n$ is the number of nodes required by the type of element.
+
 
 
 * materialsParams: a cell structure with a vector with the material parameters of the $i$-th type of material in the $i$-th entry.
