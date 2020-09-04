@@ -4,22 +4,22 @@ The structural models are defined through a set of variables definitions in a .m
 
 ## Required variables
 
-* Nodes: matrix with coordinates
-* Conec: cell structure with the connectivity information. The $i$-th entry has the vector with the MELCS indexes and the nodes of the element.
+* `Nodes`: matrix with the coordinates of all the nodes. The $i$-th row contains the three coordinates of the node $i$: $[x_i , \, y_i ,\, z_i]$,
+* `Conec`: cell structure with the connectivity information. The $\{i,1\}$ entry contains the vector with the MELCS indexes and the nodes of the $i$-th element.
 ```math
 [ MaterialIndex, \, ElementIndex, \, LoadIndex, \, CrossSectionIndex, \, SpringIndex, \, Node_1 \dots Node_{n} ]
 ```
 where the five indexes are natural numbers and the $0$ index can be used if noproperty is assigned, and $n$ is the number of nodes required by the type of element.
-* materialsParams: a cell structure with a vector with the material parameters of the $i$-th type of material in the $i$-th entry.
+* `materialsParams`: a cell structure with a vector with the material parameters of the $i$-th type of material in the $i$-th entry.
 The vector of parameters is defined as:
 ```math
 [ \rho, \, k_{thCo}, \, c_{spHe}, \, hyperModel  p_1 \dots p_{n_P} ]
 ```
 where $k_{thCo}$ is the thermal conductivity (assuming thermal isotropy), $c_{spHe}$ is the specific heat, $n_P$ is the number of parameters of the constitutive model and $\mathbf{p}$ is the vector of constitutive parameters.
-* elementsParams: a cell structure,	
-* crossSecsParams:
-* springsParams:
-* problemName: a string with the name of the problem, used to name folders and files. 
+* `elementsParams`: a cell structure,	
+* `crossSecsParams`: vector
+* `springsParams`: vector 
+* `problemName`: string with the name of the problem, used to name folders and files. 
 
 
 ### Material parameters
@@ -38,6 +38,7 @@ Model 1: linear elastic small strains.
 1. frame
 1. tetrahedron
 
+
 ### Loads params
 
 Cell structure with a vector with parameters given by:
@@ -49,10 +50,11 @@ where $q$ is an optional entry representing the input heat flow.
 
 ## Optional variables
 
-* reportBoolean: boolean to set if LaTeX report is generated (1) or not (0) [default: 1]
-* analyticSolFlag: flag indicating if an analytical solution is provided, if so a function must be defined.
-* __analyticCheckTolerance__: tolerance considered for the analytic verification default: 1e-8.
-* numericalMethodParams: vector with parameters of the numerical method used to solve the equations (default: 0)
+* `reportBoolean`: boolean to set if LaTeX report is generated (1) or not (0) [default: 1]
+* `analyticSolFlag`: flag indicating if an analytical solution is provided, if so a function must be defined.
+* `analyticCheckTolerance`: tolerance considered for the analytic verification default: 1e-8.
+* `numericalMethodParams`: vector with parameters of the numerical method used to solve the equations (default: 0)
+* `booleanSelfWeightZ`: boolean for addition of self weight (only for truss elements)
 
 ###  Analytical solution verification
 
@@ -66,4 +68,3 @@ normRelativeError =\frac{1}{t_f} \left\| \frac{  u_{N,t} - u_{A,t}  }{ u_{A,t}  
 ```math
 	normRelativeError = \frac{ \left\| \lambda( u_{N,t}) - \lambda_{N,t} \right\|_{L_1[0,t_f]} }{ \left\| \lambda_{N,t} \right\|_{L_1[0,t_f]}  }  
 ```
-* booleanSelfWeightZ: boolean for addition of self weight (only for truss elements)
