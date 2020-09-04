@@ -22,7 +22,8 @@ makedocs(
                            "Heat diffusion" => "tutorials/HeatDiffusion/heat.md"],
         "Theory" => Any["Equations" => "theory/equations.md", 
                         "Elements" => "theory/elements.md"],
-        "How to use it" => Any["Creating Models" => "howtouse/creatingModels.md"],
+        "How to use it" => Any["Installation" => "howtouse/install.md",
+                               "Creating Models" => "howtouse/creatingModels.md"],
         "References" => "references.md",
     ],
     strict = false
