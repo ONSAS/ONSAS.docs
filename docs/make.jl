@@ -1,4 +1,4 @@
-using Documenter, ONSAS_docs
+using Documenter, ONSAS_docs, DocumenterLaTeX
 
 DocMeta.setdocmeta!(ONSAS_docs, :DocTestSetup,
                     :(using ONSAS_docs); recursive=true)
@@ -12,7 +12,14 @@ include("bibliography.jl")
 makedocs(
     sitename = "ONSAS Documentation",
     modules = [ONSAS_docs],
-    format = Documenter.HTML(prettyurls = get(ENV, "CI", nothing) == "true"),
+    # ---------------------------
+    # case HTML output
+    #    format = Documenter.HTML(prettyurls = get(ENV, "CI", nothing) == "true"),
+    # ---------------------------
+    # case PDF output
+    authors = "Authors",
+    format = LaTeX(platform = "none"),
+    # ---------------------------
     pages = [
         "Home" => "index.md",
         "About" => "about.md",
@@ -26,7 +33,7 @@ makedocs(
                                "Creating Models" => "howtouse/creatingModels.md"],
         "References" => "references.md",
     ],
-    strict = false
+    strict = false,
 )
 
 deploydocs(

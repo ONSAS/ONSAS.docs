@@ -1,6 +1,5 @@
 # ONSAS: an Open Nonlinear Structural Analysis Solver
 
-[![Join the chat at https://gitter.im/onsas_/community](https://badges.gitter.im/onsas_/community.svg)](https://gitter.im/onsas_/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 ## What is ONSAS?
 
@@ -15,16 +14,6 @@ The current version allows to perform dynamic/static nonlinear analyses of beam/
 * **Dynamic analysis methods** Newmark Method.
 * **Loads** nodal loads, time-history user-defined loading program.
 
-## Some examples
-
-# A wind turbine model
-![wind](https://github.com/ONSAS/ONSAS/blob/master/examples/wind.gif?raw=true)
-
-# A tower model
-![tower](https://github.com/ONSAS/ONSAS/blob/master/examples/tower.gif?raw=true)
-
-# A chain model
-![chain](https://user-images.githubusercontent.com/42485529/90902313-a6bf8d80-e3a2-11ea-8369-a9be639552f9.gif?raw=true)
 
 ## How to use ONSAS
 
