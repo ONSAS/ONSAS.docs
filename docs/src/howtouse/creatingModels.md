@@ -35,15 +35,19 @@ Model 1: linear elastic small strains.
 ### Elements params
   The `elementsParams` cell contains a vector in each entry. The first entry of each vector contains the type of element, for each type of element a different set of optional parameters can be included as other entries of the vector. These are the available types of elements:
 
-1. node: used to add loads or spring conditions.
-1. truss: the vector used for the truss element is:
+1: node: used to add loads or spring conditions.
+
+2: truss: the vector used for the truss element is:
 ```math
 [ 2 \quad booleanConsistentMassMat ]
 ```
 where `booleanConsistentMassMat` is a boolean that sets is the consistent or lumped form of the mass matrix is used.
-1. frame
-1. tetrahedron
 
+3: frame
+
+4: tetrahedron
+
+5: triangle (used as faces to include boundary conditions) 
 
 ### Loads params
 
