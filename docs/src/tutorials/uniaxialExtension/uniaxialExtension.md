@@ -8,7 +8,10 @@ We begin by defining the structural properties of the mesh.
 
 The material properties of the model are defined by the MELCS parameters. In this case a SVK material is considered.
 
-![](../../assets/solidCube.svg)
+![](solidCube.svg)
+
+``\\def\\svgwidth{40mm}\\input{solidCube.pdf_tex}``
+
 
 
 This model can be solved analytically and the result shows a good match between
