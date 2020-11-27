@@ -10,8 +10,17 @@ The material properties of the model are defined by the MELCS parameters. In thi
 
 ![](solidCube.svg)
 
+Prueba usando latex syntax de documenter.jl 1
+
 ``\\def\\svgwidth{40mm}\\input{solidCube.pdf_tex}``
 
+Prueba usando latex syntax de documenter.jl 2
+
+``\def\svgwidth{40mm}\input{solidCube.pdf_tex}``
+
+Prueba usando directamente latex
+
+\def\svgwidth{40mm}\input{solidCube.pdf_tex}
 
 
 This model can be solved analytically and the result shows a good match between
