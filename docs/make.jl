@@ -1,4 +1,4 @@
-using Documenter, ONSAS_docs, DocumenterLaTeX
+using Documenter, ONSAS_docs
 
 DocMeta.setdocmeta!(ONSAS_docs, :DocTestSetup,
                     :(using ONSAS_docs); recursive=true)
