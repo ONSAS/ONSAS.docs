@@ -12,12 +12,24 @@ include("bibliography.jl")
 makedocs(
     sitename = "ONSAS Documentation",
     modules = [ONSAS_docs],
-    format = Documenter.HTML(prettyurls = get(ENV, "CI", nothing) == "true"),
+    
+    # ---------------------------
+    # case HTML output
+        format = Documenter.HTML(prettyurls = get(ENV, "CI", nothing) == "true"),
+    
+    # ---------------------------
+    
+    # case PDF output
+    #authors = "Authors",
+    #format = LaTeX(platform = "none"),
+    
+    # ---------------------------
+    
     pages = [
         "Home" => "index.md",
         "About" => "about.md",
         "Tutorials" => Any["Static Von-Mises Truss" =>  "tutorials/StaticVonMisesTruss/staticVonMisesTruss.md",
-                           "Linear elastic solid" => "tutorials/LinearElastic/linear_elastic.md",
+                           "Uniaxial Extension Solid" => "tutorials/uniaxialExtension/uniaxialExtension.md",
                            "Simple pendulum" => "tutorials/SimplePendulum/simple_pendulum.md",
                            "Heat diffusion" => "tutorials/HeatDiffusion/heat.md"],
         "Theory" => Any["Equations" => "theory/equations.md", 

@@ -78,7 +78,7 @@ Where `booleanConsistentMassMat` is a boolean that sets if the consistent or lum
 ```math
 [ 4 \quad booleanConsistentMassMat ]
 ```
-
+1. Triangle: (used as faces to include boundary conditions) 
 
 ### Loads params
 
