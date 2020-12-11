@@ -31,9 +31,8 @@ The current version allows to perform dynamic/static nonlinear analyses of beam/
 The user should follow these steps to install and run ONSAS:
 
 1. Download and install [GNU-Octave](https://www.gnu.org/software/octave/)
-1. Download the ONSAS source files https://github.com/onsas/onsas/archive/v0.1.9.zip
-1. Open GNU-Octave and run the _ONSAS.m_ script
-1. Select one of the available input files (or create one).
+1. Download the ONSAS [zip](https://github.com/onsas/onsas/archive/v0.1.10.zip) source files
+1. Open GNU-Octave and run one of the example scripts from the examples folder (or create yours!).
 
 ## Contributors and License
 
