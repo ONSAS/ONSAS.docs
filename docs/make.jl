@@ -12,7 +12,19 @@ include("bibliography.jl")
 makedocs(
     sitename = "ONSAS Documentation",
     modules = [ONSAS_docs],
-    format = Documenter.HTML(prettyurls = get(ENV, "CI", nothing) == "true"),
+    
+    # ---------------------------
+    # case HTML output
+        format = Documenter.HTML(prettyurls = get(ENV, "CI", nothing) == "true"),
+    
+    # ---------------------------
+    
+    # case PDF output
+    #authors = "Authors",
+    #format = LaTeX(platform = "none"),
+    
+    # ---------------------------
+    
     pages = [
         "Home" => "index.md",
         "About" => "about.md",

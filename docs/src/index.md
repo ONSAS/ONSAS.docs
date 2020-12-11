@@ -15,7 +15,7 @@ The current version allows to perform dynamic/static nonlinear analyses of beam/
 * **Dynamic analysis methods** Newmark Method.
 * **Loads** nodal loads, time-history user-defined loading program.
 
-## Some examples
+## Some examples	
 
 # A wind turbine model
 ![wind](https://github.com/ONSAS/ONSAS_docs/gifs/wind.gif?raw=true)
@@ -23,8 +23,7 @@ The current version allows to perform dynamic/static nonlinear analyses of beam/
 # A tower model
 ![tower](https://github.com/ONSAS/ONSAS_docs/gifs/tower.gif?raw=true)
 
-
-# A chain model
+# A chain model	
 ![chain](https://user-images.githubusercontent.com/42485529/90902313-a6bf8d80-e3a2-11ea-8369-a9be639552f9.gif?raw=true)
 
 ## How to use ONSAS
@@ -32,9 +31,8 @@ The current version allows to perform dynamic/static nonlinear analyses of beam/
 The user should follow these steps to install and run ONSAS:
 
 1. Download and install [GNU-Octave](https://www.gnu.org/software/octave/)
-1. Download the ONSAS source files https://github.com/onsas/onsas/archive/v0.1.9.zip
-1. Open GNU-Octave and run the _ONSAS.m_ script
-1. Select one of the available input files (or create one).
+1. Download the ONSAS [zip](https://github.com/onsas/onsas/archive/v0.1.10.zip) source files
+1. Open GNU-Octave and run one of the example scripts from the examples folder (or create yours!).
 
 ## Contributors and License
 
