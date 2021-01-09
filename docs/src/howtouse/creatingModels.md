@@ -45,17 +45,24 @@ Model 3: Linear material with rotated engineering strains (Saint-Venant-Kirchhof
 
 ### Cross-section parameters
 
-1. General section: 
+1. General section:
+
    ```math
    [ 1,A,I_x,I_y,I_z,(J_x,J_y,J_z) ]
    ```
-Where $A$, $Ix$, $Iy$ and $Iz$ corresponds to the cross section area, the torsional stiffness and the bending stiffnesses respectively.
-1. Rectangular cross section: 
+   
+   Where $A$, $Ix$, $Iy$ and $Iz$ corresponds to the cross section area, the torsional stiffness and the bending stiffnesses respectively.
+
+1. Rectangular cross section:
+
    ```math  
    [2,w_y,w_z]
    ```
-Where $w_y$ and $W_z$ corresponds to the dimension parallel to the $y$ and $z$ local axes respectively.
-1. Solid circular cross section: 
+   
+   Where $w_y$ and $W_z$ corresponds to the dimension parallel to the $y$ and $z$ local axes respectively.
+
+1. Solid circular cross section:
+   
    ```math 
    [3,D]
    ```
@@ -64,7 +71,6 @@ Where $w_y$ and $W_z$ corresponds to the dimension parallel to the $y$ and $z$ l
   The `elementsParams` cell contains a vector in each entry. The first entry of each vector contains the type of element, for each type of element a different set of optional parameters can be included as other entries of the vector. These are the available types of elements:
 
 1. Node: used to add loads or spring conditions.
-  
 1. Truss: the vector used for the truss element is:
 
    ```math 
