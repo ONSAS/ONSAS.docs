@@ -18,7 +18,7 @@ The vector of parameters is defined as:
 ```
 where $k_{thCo}$ is the thermal conductivity (assuming thermal isotropy), $c_{spHe}$ is the specific heat, $n_P$ is the number of parameters of the constitutive model and $\mathbf{p}$ is the vector of constitutive parameters.
 * `elementsParams`: cell structure with the element types information. Each different type of element corresponds to a different number. The properties of the element are in correspondency of the ElementIndex defined in the Conec cell structure. The structure of the cell is:
- ```math
+```math
 [ elemType_{1}, \dots, elemType_{n} ] 
 ```
 * `crossSecsParams`: cell structure with the information of the cross section parameters. The $\{i,1\}$ entry contains the vector with the paremeters in correspondency with the CrossSectionIndex defined in the Conec cell structure. 
@@ -45,39 +45,46 @@ Model 3: Linear material with rotated engineering strains (Saint-Venant-Kirchhof
 
 ### Cross-section parameters
 
-  1. General section: 
-```math
-[ 1,A,I_x,I_y,I_z,(J_x,J_y,J_z) ]
-```
+1. General section: 
+   ```math
+   [ 1,A,I_x,I_y,I_z,(J_x,J_y,J_z) ]
+   ```
 Where $A$, $Ix$, $Iy$ and $Iz$ corresponds to the cross section area, the torsional stiffness and the bending stiffnesses respectively.
-  1. Rectangular cross section: 
-```math  
-[2,w_y,w_z]
-```
+1. Rectangular cross section: 
+   ```math  
+   [2,w_y,w_z]
+   ```
 Where $w_y$ and $W_z$ corresponds to the dimension parallel to the $y$ and $z$ local axes respectively.
-  1. Solid circular cross section: 
-```math  
-[3,D] 
-```
-With $D$ being the diameter.
-	
+1. Solid circular cross section: 
+   ```math 
+   [3,D]
+   ```
+
 ### Elements params
   The `elementsParams` cell contains a vector in each entry. The first entry of each vector contains the type of element, for each type of element a different set of optional parameters can be included as other entries of the vector. These are the available types of elements:
 
 1. Node: used to add loads or spring conditions.
+  
 1. Truss: the vector used for the truss element is:
-```math
-[ 2 \quad booleanConsistentMassMat ]
-```
-Where `booleanConsistentMassMat` is a boolean that sets if the consistent or lumped form of the mass matrix is used.
+
+   ```math 
+   [ 2 \quad booleanConsistentMassMat ]
+   ```
+
+   Where `booleanConsistentMassMat` is a boolean that sets if the consistent or lumped form of the mass matrix is used.
+
 1. Frame: the vector used for the frame element is:
-```math
-[ 3 \quad booleanConsistentMassMat ]
-```
+
+   ``` math 
+   [ 3 \quad booleanConsistentMassMat ]
+   ```
+
 1. Tetrahedron: the vector used for the thetrahedron element is:
-```math
-[ 4 \quad booleanConsistentMassMat ]
-```
+
+   ``` math 
+   [ 4 \quad booleanConsistentMassMat ] 
+   ```
+
 1. Triangle: (used as faces to include boundary conditions) 
 
 ### Loads params
