@@ -38,9 +38,53 @@ where each entry of the $i$-th type corresponds with the spring stiffness. In ca
 
 ### Material parameters
 
-Model 1: Linear material with small strains (Saint-Venant-Kirchhoff).
-Model 2: Linear material with Green Lagrange strains (Saint-Venant-Kirchhoff).
-Model 3: Linear material with rotated engineering strains (Saint-Venant-Kirchhoff).
+* `Model 1`: Linear material with small strains (Saint-Venant-Kirchhoff).  
+* `Model 2`: Linear material with Green Lagrange strains (Saint-Venant-Kirchhoff).  
+* `Model 3`: Linear material with rotated engineering strains (Saint-Venant-Kirchhoff).  
+
+### Elements params
+  The `elementsParams` cell contains a vector in each entry. The first entry of each vector contains the type of element, for each type of element a different set of optional parameters can be included as other entries of the vector. These are the available types of elements:
+
+1. Node: used to add loads or spring conditions.
+1. Truss: the vector used for the truss element is:
+
+   ```math 
+   [ 2 \quad booleanConsistentMassMat ]
+   ```
+
+   Where `booleanConsistentMassMat` is a boolean that sets if the consistent or lumped form of the mass matrix is used.
+
+1. Frame: the vector used for the frame element is:
+
+   ``` math 
+   [ 3 ]
+   ```
+   
+   No additional parameter is needed for the frame element.
+   
+1. Tetrahedron: the vector used for the thetrahedron element is:
+
+   ``` math 
+   [ 4 \quad consMatFlag ] 
+   ```
+   
+   Where `consMatFlag` is a parameter that allows the user to choose the method of computation the constitutive matrix. This parameter can take the values `1`and `2` corresponding to the computation of the constitutive matrix using the complex-step expression and analytical expression respectively.` 
+   If the element is modeled as a Neo-Hookean compresible material, the value of the `consMatFlag` shall be 1.
+   
+1. Triangle: (used as faces to include boundary conditions) 
+
+   ``` math 
+   [ 5 ] 
+   ```
+
+### Loads params
+
+Cell structure with a vector with parameters given by:
+
+```math
+[ global/local,\,  variable/constant,\,  f_x,\, m_x,\,  f_y,\, m_y,\,  f_z,\,  m_z,  q ]
+```
+where $q$ is an optional entry representing the input heat flow.
 
 
 ### Cross-section parameters
@@ -67,48 +111,44 @@ Model 3: Linear material with rotated engineering strains (Saint-Venant-Kirchhof
    [3,D]
    ```
 
-### Elements params
-  The `elementsParams` cell contains a vector in each entry. The first entry of each vector contains the type of element, for each type of element a different set of optional parameters can be included as other entries of the vector. These are the available types of elements:
-
-1. Node: used to add loads or spring conditions.
-1. Truss: the vector used for the truss element is:
-
-   ```math 
-   [ 2 \quad booleanConsistentMassMat ]
-   ```
-
-   Where `booleanConsistentMassMat` is a boolean that sets if the consistent or lumped form of the mass matrix is used.
-
-1. Frame: the vector used for the frame element is:
-
-   ``` math 
-   [ 3 \quad booleanConsistentMassMat ]
-   ```
-
-1. Tetrahedron: the vector used for the thetrahedron element is:
-
-   ``` math 
-   [ 4 \quad booleanConsistentMassMat ] 
-   ```
-
-1. Triangle: (used as faces to include boundary conditions) 
-
-### Loads params
-
-Cell structure with a vector with parameters given by:
-```math
-[ global/local,\,  variable/constant,\,  f_x,\, m_x,\,  f_y,\, m_y, ,\,  f_z,\, m_z, q ]
-```
-where $q$ is an optional entry representing the input heat flow.
 
 
 ## Optional variables
 
+# General variables:
+
 * `reportBoolean`: boolean to set if LaTeX report is generated (1) or not (0) [default: 1]
 * `analyticSolFlag`: flag indicating if an analytical solution is provided, if so a function must be defined.
 * `analyticCheckTolerance`: tolerance considered for the analytic verification default: 1e-8.
+
+# Modeling variables:
+
 * `numericalMethodParams`: vector with parameters of the numerical method used to solve the equations (default: 0)
+
+The structure of the array for the available numerical methods is:
+
+```math
+\left\{
+\begin{array}{ccccccc}
+[\; &0,\; &stopTolDeltau,\; &stopTolForces,\; &stopTolIts,\; &targetLoadFactr,\; &nLoadSteps,\; & ] \\
+[\; &1,\; &stopTolDeltau,\; &stopTolForces,\; &stopTolIts,\; &targetLoadFactr,\; &nLoadSteps,\; & ] \\
+[\; &2,\; &stopTolDeltau,\; &stopTolForces,\; &stopTolIts,\; &targetLoadFactr,\; &nLoadSteps,\; &incremArcLen ] \\
+[\; &3,\; &deltaT,\; &finalTime,\; &stopTolDeltau,\; &stopTolForces,\; &stopTolIts,\; &deltaNW,\; &AlphaNW ] \\
+[\; &4,\; &deltaT,\; &finalTime,\; &stopTolDeltau,\; &stopTolForces,\; &stopTolIts,\; &alphaHHT,\; & ] \\
+\end{array}
+\right\}
+\begin{array}{ccccccc}
+Linear\;static\;analysis \\
+Non-Linear\;analysis\;Newton-Raphson \\
+Non-Linear\;analysis\;Newton-Raphson\;Arc-Length \\
+Dynamic\;analysis\;Newmark \\
+Dynamic\;analysis\;HHT \\
+\end{array}
+```
+
 * `booleanSelfWeightZ`: boolean for addition of self weight (only for truss elements)
+* `nonHomogeneousInitialCondU0`: matrix to prescribe the value of displacements at the time step $t$=0.
+* `nonHomogeneousInitialCondUdot0`: matrix to prescribe the value of velocities at the time step $t$=0.
 
 ###  Analytical solution verification
 
