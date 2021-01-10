@@ -18,7 +18,7 @@ The vector of parameters is defined as:
 ```
 where $k_{thCo}$ is the thermal conductivity (assuming thermal isotropy), $c_{spHe}$ is the specific heat, $n_P$ is the number of parameters of the constitutive model and $\mathbf{p}$ is the vector of constitutive parameters.
 * `elementsParams`: cell structure with the element types information. Each different type of element corresponds to a different number. The properties of the element are in correspondency of the ElementIndex defined in the Conec cell structure. The structure of the cell is:
- ```math
+```math
 [ elemType_{1}, \dots, elemType_{n} ] 
 ```
 * `crossSecsParams`: cell structure with the information of the cross section parameters. The $\{i,1\}$ entry contains the vector with the paremeters in correspondency with the CrossSectionIndex defined in the Conec cell structure. 
@@ -38,64 +38,117 @@ where each entry of the $i$-th type corresponds with the spring stiffness. In ca
 
 ### Material parameters
 
-Model 1: Linear material with small strains (Saint-Venant-Kirchhoff).
-Model 2: Linear material with Green Lagrange strains (Saint-Venant-Kirchhoff).
-Model 3: Linear material with rotated engineering strains (Saint-Venant-Kirchhoff).
+* `Model 1`: Linear material with small strains (Saint-Venant-Kirchhoff).  
+* `Model 2`: Linear material with Green Lagrange strains (Saint-Venant-Kirchhoff).  
+* `Model 3`: Linear material with rotated engineering strains (Saint-Venant-Kirchhoff).  
 
-
-### Cross-section parameters
-
-  1. General section: 
-```math
-[ 1,A,I_x,I_y,I_z,(J_x,J_y,J_z) ]
-```
-Where $A$, $Ix$, $Iy$ and $Iz$ corresponds to the cross section area, the torsional stiffness and the bending stiffnesses respectively.
-  1. Rectangular cross section: 
-```math  
-[2,w_y,w_z]
-```
-Where $w_y$ and $W_z$ corresponds to the dimension parallel to the $y$ and $z$ local axes respectively.
-  1. Solid circular cross section: 
-```math  
-[3,D] 
-```
-With $D$ being the diameter.
-	
 ### Elements params
   The `elementsParams` cell contains a vector in each entry. The first entry of each vector contains the type of element, for each type of element a different set of optional parameters can be included as other entries of the vector. These are the available types of elements:
 
 1. Node: used to add loads or spring conditions.
 1. Truss: the vector used for the truss element is:
-```math
-[ 2 \quad booleanConsistentMassMat ]
-```
-Where `booleanConsistentMassMat` is a boolean that sets if the consistent or lumped form of the mass matrix is used.
+
+   ```math 
+   [ 2 \quad booleanConsistentMassMat ]
+   ```
+
+   Where `booleanConsistentMassMat` is a boolean that sets if the consistent or lumped form of the mass matrix is used.
+
 1. Frame: the vector used for the frame element is:
-```math
-[ 3 \quad booleanConsistentMassMat ]
-```
+
+   ``` math 
+   [ 3 ]
+   ```
+   
+   No additional parameter is needed for the frame element.
+   
 1. Tetrahedron: the vector used for the thetrahedron element is:
-```math
-[ 4 \quad booleanConsistentMassMat ]
-```
+
+   ``` math 
+   [ 4 \quad consMatFlag ] 
+   ```
+   
+   Where `consMatFlag` is a parameter that allows the user to choose the method of computation the constitutive matrix. This parameter can take the values `1`and `2` corresponding to the computation of the constitutive matrix using the complex-step expression and analytical expression respectively.` 
+   If the element is modeled as a Neo-Hookean compresible material, the value of the `consMatFlag` shall be 1.
+   
 1. Triangle: (used as faces to include boundary conditions) 
+
+   ``` math 
+   [ 5 ] 
+   ```
 
 ### Loads params
 
 Cell structure with a vector with parameters given by:
+
 ```math
-[ global/local,\,  variable/constant,\,  f_x,\, m_x,\,  f_y,\, m_y, ,\,  f_z,\, m_z, q ]
+[ global/local,\,  variable/constant,\,  f_x,\, m_x,\,  f_y,\, m_y,\,  f_z,\,  m_z,  q ]
 ```
 where $q$ is an optional entry representing the input heat flow.
 
 
+### Cross-section parameters
+
+1. General section:
+
+   ```math
+   [ 1,A,I_x,I_y,I_z,(J_x,J_y,J_z) ]
+   ```
+   
+   Where $A$, $Ix$, $Iy$ and $Iz$ corresponds to the cross section area, the torsional stiffness and the bending stiffnesses respectively.
+
+1. Rectangular cross section:
+
+   ```math  
+   [2,w_y,w_z]
+   ```
+   
+   Where $w_y$ and $W_z$ corresponds to the dimension parallel to the $y$ and $z$ local axes respectively.
+
+1. Solid circular cross section:
+   
+   ```math 
+   [3,D]
+   ```
+
+
+
 ## Optional variables
+
+# General variables:
 
 * `reportBoolean`: boolean to set if LaTeX report is generated (1) or not (0) [default: 1]
 * `analyticSolFlag`: flag indicating if an analytical solution is provided, if so a function must be defined.
 * `analyticCheckTolerance`: tolerance considered for the analytic verification default: 1e-8.
+
+# Modeling variables:
+
 * `numericalMethodParams`: vector with parameters of the numerical method used to solve the equations (default: 0)
+
+The structure of the array for the available numerical methods is:
+
+```math
+\left\{
+\begin{array}{ccccccc}
+[\; &0,\; &stopTolDeltau,\; &stopTolForces,\; &stopTolIts,\; &targetLoadFactr,\; &nLoadSteps,\; & ] \\
+[\; &1,\; &stopTolDeltau,\; &stopTolForces,\; &stopTolIts,\; &targetLoadFactr,\; &nLoadSteps,\; & ] \\
+[\; &2,\; &stopTolDeltau,\; &stopTolForces,\; &stopTolIts,\; &targetLoadFactr,\; &nLoadSteps,\; &incremArcLen ] \\
+[\; &3,\; &deltaT,\; &finalTime,\; &stopTolDeltau,\; &stopTolForces,\; &stopTolIts,\; &deltaNW,\; &AlphaNW ] \\
+[\; &4,\; &deltaT,\; &finalTime,\; &stopTolDeltau,\; &stopTolForces,\; &stopTolIts,\; &alphaHHT,\; & ] \\
+\end{array}
+\right\}
+\begin{array}{ccccccc}
+Linear\;static\;analysis \\
+Non-Linear\;analysis\;Newton-Raphson \\
+Non-Linear\;analysis\;Newton-Raphson\;Arc-Length \\
+Dynamic\;analysis\;Newmark \\
+Dynamic\;analysis\;HHT \\
+\end{array}
+```
+
 * `booleanSelfWeightZ`: boolean for addition of self weight (only for truss elements)
+* `nonHomogeneousInitialCondU0`: matrix to prescribe the value of displacements at the time step $t$=0.
+* `nonHomogeneousInitialCondUdot0`: matrix to prescribe the value of velocities at the time step $t$=0.
 
 ###  Analytical solution verification
 
@@ -109,4 +162,7 @@ normRelativeError =\frac{1}{t_f} \left\| \frac{  u_{N,t} - u_{A,t}  }{ u_{A,t}  
 ```math
 	normRelativeError = \frac{ \left\| \lambda( u_{N,t}) - \lambda_{N,t} \right\|_{L_1[0,t_f]} }{ \left\| \lambda_{N,t} \right\|_{L_1[0,t_f]}  }  
 ```
+
+
+
 
