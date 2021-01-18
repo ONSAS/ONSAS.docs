@@ -1,4 +1,4 @@
-using Documenter, ONSAS_docs
+using Documenter, ONSAS_docs, DocumenterLaTeX
 
 DocMeta.setdocmeta!(ONSAS_docs, :DocTestSetup,
                     :(using ONSAS_docs); recursive=true)
@@ -22,6 +22,7 @@ makedocs(
     # case PDF output
     #authors = "Authors",
     #format = LaTeX(platform = "none"),
+    #makedocs(format = DocumenterLaTeX.LaTeX()),
     
     # ---------------------------
     
