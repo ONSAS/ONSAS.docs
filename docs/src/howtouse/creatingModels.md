@@ -68,7 +68,7 @@ where each entry of the $i$-th type corresponds with the spring stiffness. In ca
    [ 4 \quad consMatFlag ] 
    ```
    
-   Where `consMatFlag` is a parameter that allows the user to choose the method of computation the constitutive matrix. This parameter can take the values `1`and `2` corresponding to the computation of the constitutive matrix using the complex-step expression and analytical expression respectively.` 
+   Where `consMatFlag` is a parameter that allows the user to choose the method of computation the constitutive matrix. This parameter can take the values `1` and `2` corresponding to the computation of the constitutive matrix using the complex-step expression and analytical expression respectively.
    If the element is modeled as a Neo-Hookean compresible material, the value of the `consMatFlag` shall be 1.
    
 1. Triangle: (used as faces to include boundary conditions) 
@@ -115,15 +115,37 @@ where $q$ is an optional entry representing the input heat flow.
 
 ## Optional variables
 
-# General variables:
+### General variables:
 
-* `reportBoolean`: boolean to set if LaTeX report is generated (1) or not (0) [default: 1]
-* `analyticSolFlag`: flag indicating if an analytical solution is provided, if so a function must be defined.
-* `analyticCheckTolerance`: tolerance considered for the analytic verification default: 1e-8.
+* `reportBoolean`: boolean to set if LaTeX report is generated (1) or not (0). [default: 1] - currently not working
+* `booleanScreenOutput`: boolean to set the output of the results on the command window. [default: 1]
+* `storeBoolean`: boolean to store the results of the current iteration such as the displacements, tangent matrices, normal forces and stresses. [default: 1]
+* `plotParamsVector`: array to set the type of output to visualize the results. [default: 1]
+* `plotsViewAxis`: array to set the point of view of the Octave plots. [default: []]
 
-# Modeling variables:
 
-* `numericalMethodParams`: vector with parameters of the numerical method used to solve the equations (default: 0)
+### Modeling variables:
+
+* `booleanSelfWeightZ`: se usa??? - confirmar con Jorge, creo que no
+* `stabilityAnalysisBoolean`: boolean to perform stability analysis and find eigenvalues. [default: []]
+
+
+* `numericalMethodParams`: vector with parameters of the numerical method used to solve the equations. [default: []]
+
+* `nodalDisDamping`: Mauricio completa... [default: 0]
+* `consMatFlag`: parameter defined in the elementsParams cell that intervenes in the computation of the constitutive matrix of the tetrahedron element. [default: 2]
+* `loadFactorsFunc`: function that defines forces applied on the structure variable in time. [default: t]
+* `userLoadsFileName`: file with extension `.m` provided by the user that can be used to apply forces varying in time in a complex manner. [default: t]
+* `nonHomogeneousInitialCondU0`: matrix to set  the value of displacements at the time step $t$=0. [default: []]
+* `nonHomogeneousInitialCondUdot0`: matrix to prescribe the value of velocities at the time step $t$=0. [default: []]
+
+* `analyticSolFlag`: flag indicating if an analytical solution is provided, if so a function must be defined. [default: 0]
+* `analyticCheckTolerance`: tolerance considered for the analytic verification. [default: 1e-8]
+* `controlDofs: degrees of freedom to check the analytical values of a certain benchmark problem. [default: []]
+
+* `controlDofsAndFactors: Jorge completa... . [default: []]
+
+
 
 The structure of the array for the available numerical methods is:
 
@@ -146,11 +168,9 @@ Dynamic\;analysis\;HHT \\
 \end{array}
 ```
 
-* `booleanSelfWeightZ`: boolean for addition of self weight (only for truss elements)
-* `nonHomogeneousInitialCondU0`: matrix to prescribe the value of displacements at the time step $t$=0.
-* `nonHomogeneousInitialCondUdot0`: matrix to prescribe the value of velocities at the time step $t$=0.
 
-###  Analytical solution verification
+
+### Analytical solution verification
 
 The user can provide analytical solutions, which are automatically compared with the numerical solution provided by ONSAS. The solutions can be provided through different methods or formats, which are set by the variable __analyticSolFlag__. The formats of the solutions and the corresponding error measures used for the validation are:
 
