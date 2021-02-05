@@ -69,7 +69,7 @@ where each entry of the $i$-th type corresponds with the spring stiffness. In ca
    ```
    
    Where `consMatFlag` is a parameter that allows the user to choose the method of computation the constitutive matrix. This parameter can take the values `1` and `2` corresponding to the computation of the constitutive matrix using the complex-step expression and analytical expression respectively.
-   If the element is modeled as a Neo-Hookean compresible material, the value of the `consMatFlag` shall be 1.
+   If the element is modeled as a Neo-Hookean compresible material, the value of the `consMatFlag` shall be 1. The default value is 2. 
    
 1. Triangle: (used as faces to include boundary conditions) 
 
@@ -84,8 +84,10 @@ Cell structure with a vector with parameters given by:
 ```math
 [ global/local,\,  variable/constant,\,  f_x,\, m_x,\,  f_y,\, m_y,\,  f_z,\,  m_z,  q ]
 ```
-where $q$ is an optional entry representing the input heat flow.
+where $q$ is an optional entry representing the input heat flow. In addition, the user can provide forces varying in time with the following optional variables:
 
+* `loadFactorsFunc` (optional): function that defines forces applied on the structure variable in time. [default: t]
+* `userLoadsFileName` (optional): filename of `.m` function file provided by the user that can be used to apply other forces varying.
 
 ### Cross-section parameters
 
@@ -111,11 +113,11 @@ where $q$ is an optional entry representing the input heat flow.
    [3,D]
    ```
 
-
-
 ## Optional variables
 
 ### General variables:
+
+List of optional general variables:
 
 * `reportBoolean`: boolean to set if LaTeX report is generated (1) or not (0). [default: 1] - currently not working
 * `booleanScreenOutput`: boolean to set the output of the results on the command window. [default: 1]
@@ -126,26 +128,24 @@ where $q$ is an optional entry representing the input heat flow.
 
 ### Modeling variables:
 
-* `booleanSelfWeightZ`: se usa??? - confirmar con Jorge, creo que no
-* `stabilityAnalysisBoolean`: boolean to perform stability analysis and find eigenvalues. [default: []]
+List of optional modelling variables:
 
-
-* `numericalMethodParams`: vector with parameters of the numerical method used to solve the equations. [default: []]
-
-* `nodalDisDamping`: Mauricio completa... [default: 0]
-* `consMatFlag`: parameter defined in the elementsParams cell that intervenes in the computation of the constitutive matrix of the tetrahedron element. [default: 2]
-* `loadFactorsFunc`: function that defines forces applied on the structure variable in time. [default: t]
-* `userLoadsFileName`: file with extension `.m` provided by the user that can be used to apply forces varying in time in a complex manner. [default: t]
+* `booleanSelfWeightZ`: boolean to consider the selfweight of the elements in the analysis. [default: 0] 
+* `stabilityAnalysisBoolean`: boolean to perform stability analysis compute eigenvalues of tangent matrix. [default: []]
+* `nodalDisDamping`: scalar value of external viscous damping for displacements degrees of freedom [default: 0]
 * `nonHomogeneousInitialCondU0`: matrix to set  the value of displacements at the time step $t$=0. [default: []]
 * `nonHomogeneousInitialCondUdot0`: matrix to prescribe the value of velocities at the time step $t$=0. [default: []]
-
 * `analyticSolFlag`: flag indicating if an analytical solution is provided, if so a function must be defined. [default: 0]
 * `analyticCheckTolerance`: tolerance considered for the analytic verification. [default: 1e-8]
-* `controlDofs: degrees of freedom to check the analytical values of a certain benchmark problem. [default: []]
+* `controlDofs: vector with information of the degree of freedom used to compare numerical vs analytical solution. [default: []]
 
-* `controlDofsAndFactors: Jorge completa... . [default: []]
+$$
+controlDofs = [ node nodaldof scalefactor ]
+$$ 
 
+with node being the node number, nodaldof being the local dof of the node (1 for x displacement, 2 for x angle ... 6), and scale factor being a scale factor to multiply the value before plotting.
 
+* `numericalMethodParams`: array with parameters of the numerical method used to solve the equations. [default: []]
 
 The structure of the array for the available numerical methods is:
 
