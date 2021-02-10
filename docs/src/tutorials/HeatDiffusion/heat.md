@@ -41,5 +41,5 @@ nothing
 The analytic solution in this case is
 
 ```math
-T(x, t) = e^{-(\pi \alpha)^2 t}\sin \pi x + \frac{1}{2}e^{-(3\pi \alpha)^2 t}\sin 3\pi x,\qquad 0 \leq x \leq 1, t \geq 0.
+T(x, t) = e^{- \pi^2 \alpha t}\sin \pi x + \frac{1}{2}e^{-(3\pi)^2 \alpha t}\sin 3\pi x,\qquad 0 \leq x \leq 1, t \geq 0.
 ```
