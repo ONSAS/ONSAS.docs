@@ -30,9 +30,20 @@ The current version allows to perform dynamic/static nonlinear analyses of beam/
 
 The user should follow these steps to install and run ONSAS:
 
-1. Download and install [GNU-Octave](https://www.gnu.org/software/octave/)
-1. Download the ONSAS [zip](https://github.com/onsas/onsas/archive/v0.1.10.zip) source files
+1. Download and install [GNU-Octave](https://www.gnu.org/software/octave/). Older versions than 5.1.0 are not compatible with ONSAS.
+1. Download the ONSAS [zip](https://github.com/onsas/onsas/archive/v0.1.10.zip) source files.
 1. Open GNU-Octave and run one of the example scripts from the examples folder (or create yours!).
+
+Some optional software that can be used in conjunction with ONSAS to create meshes or visualize results are:
+
+1. [GMSH](https://gmsh.info/)
+1. [ParaView](https://www.paraview.org/)
+
+The files that can be read by ONSAS to create structural models are:
+
+1. `.m` files.
+1. `.msh` files.
+1. `.dxf` files 
 
 ## Contributors and License
 

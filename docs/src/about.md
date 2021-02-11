@@ -6,7 +6,7 @@ The following authors collaborated in various tasks including: design, developme
 
 * **J. Bruno Bazzano**[^1], [^2], leaded the development of the nonlinear/linear buckling analysis modules, co-designed the code, developed and implemented validation examples, validated the HHT implementation.
 
-* **Joaquín Viera** [^1], leaded the development of the Linear Analysis module and input files, collaborated in the design and development of the input reading and output generation modules, leaded the development of GUI.
+* [**Joaquín Viera**](https://exportcvuy.anii.org.uy/cv/?b6b1cd2fe90a9c29279eedb0d3cc4c4d) [^1], leaded the development of the Linear Analysis module and input files, collaborated in the design and development of the input reading and output generation modules, leaded the development of GUI.
 
 * **Mauricio Vanzulli** [^4] co-developed the Newmark's method functions and scripts, developed input files for the dynamic analysis examples.
 
