@@ -4,7 +4,7 @@ In this tutorial, the static Von Mises Truss is considered. The aim of this exam
 
 The structural model can be seen in the following figure.
 
-FIGURA
+![](vonMisesTruss.svg)
 
 The bars are composed of an isotropic elastic and homogeneous material, with elastiity modulus $E$, Poisson coefficient $\nu$=0 and length $L$. The node $2$ is subjected to a variable nodal load $P$ as shown in the figure. The self weight of the bars is neglected, so $\rho$=0.
 
@@ -48,7 +48,7 @@ crossSecsParams = \{[\;2,\;\sqrt{A},\;\sqrt{A}\;]\}
 
 ### springsParams
 
-Two tifferent types of springs are considered. The nodes $1$ and $3$ are pinned and corresponds to one type of spring, the node $3$ has the displacement about the global axis $y$ restrained. The degrees of freedom are considered fully restrained so, the stiffness of the springs are considered as $+\infty$ in the direction that the restrain occurs. The `springsParams` cell is:
+Two tifferent types of springs are considered. The nodes $1$ and $3$ are pinned and corresponds to one type of spring, the node $2$ has the displacement about the global axis $y$ restrained. The degrees of freedom are considered fully restrained so, the stiffness of the springs are considered as $+\infty$ in the direction that the restrain occurs. The `springsParams` cell is:
 
 ```math
 crossSecsParams = \Bigg\{
