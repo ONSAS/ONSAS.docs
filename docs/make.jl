@@ -10,7 +10,7 @@ DocMeta.setdocmeta!(ONSAS_docs, :DocTestSetup,
 include("bibliography.jl")
 
 makedocs(
-    sitename = "ONSAS Documentation",
+    sitename = "ONSAS.m",
     modules = [ONSAS_docs],
 
     # ---------------------------
