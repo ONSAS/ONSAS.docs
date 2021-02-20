@@ -1,6 +1,33 @@
-# Solid Elements Implementation
+# Principle of Virtual Mechanical Work
 
-## Tetrahedron Solid Element
+## Variational formulation of the principle
+
+ONSAS can be used to solve the set of nonlynear equations given by the Principle of Virtual Work (PVW). The PVW can be defined in terms of the following set of nonlinear equations:
+
+```math
+\left(
+     \mathbf{f}_{mas}(\mathbf{u}_t, \dot{\mathbf{u}}_t, \ddot{\mathbf{u}}_t) 
+  +  \mathbf{f}_{vis}(\dot{\mathbf{u}}_t) 
+  +  \mathbf{f}_{int}(\mathbf{u}_t)
+  -  \mathbf{f}_{ext}(t)
+\right) \cdot \delta \mathbf{u} 
+=
+0 \qquad \forall \delta \mathbf{u} \in \tilde{\mathcal{U}}
+``` 
+
+The PVT is given by:
+
+```math
+\left(
+\nabla \cdot ( k \nabla T ) + Q_h  - \rho c \frac{\partial T}{\partial t}
+\right) \delta T =
+0 \qquad \forall \delta T \in \tilde{\mathcal{T}}
+```
+
+
+## Solid Elements Implementation
+
+### Tetrahedron Solid Element
 
 The tetrahedron element considered is a four-node linear element. The isoparametric coordinates reference element is shown in the following figure
 
