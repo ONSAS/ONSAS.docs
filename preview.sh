@@ -1,3 +1,3 @@
 
 julia docs/make.jl
-firefox docs/build/index.html
+midori docs/build/index.html
