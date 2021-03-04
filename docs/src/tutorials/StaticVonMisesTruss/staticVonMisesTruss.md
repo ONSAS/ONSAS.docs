@@ -7,14 +7,14 @@ The structural model is formed by two truss elements as it is shown in the figur
 
 ![structure diagram](vonMisesTruss.svg)
 
-The Octave script is avaiable at: [RUTA]()
+The Octave script is available at: [https://github.com/ONSAS/ONSAS.m/blob/master/examples/staticVonMises](turaaaaaaaaa)
  
 Before defining the structs, the workspace is cleaned, the ONSAS directory is added to the path and scalar auxiliar parameters are defined.
 ```
 close all, clear all ;
 addpath( [ pwd '/../../src'] ); 
 E = 210e9 ;  A = 2.5e-3 ; ang1 = 65 ; L = 2 ; nu = 0 ;
-auxx = cos( ang1*pi/180 ) * L ;  auxz = sin( ang1*pi/180 ) * L ;
+auxx = cos( ang1*pi/180 ) * L ;  auxz = sin( ang1*pi/180 ) * L ; l0 = sqrt(auxx^2 + auxz^2) ;
 ```
 
 ## MEBI parameters
@@ -25,13 +25,10 @@ The modelling of the structure begins with the definition of the Material-Elemen
 ### materials
  Since both bars are formed by the same material all the fields of the `materials` struct will have only one entry. contains only one vector. The constitutive behavior is the SaintVenantKirchhoff:
 ```
-materials.hyperElasModel  = { 'SVK'} ;
+materials.hyperElasModel  = { '1DrotEngStrain'} ;
+materials.hyperElasParams = { [ E nu ] } ;
 ```
  and the parameters of this model are the Lamé parameters
-```
-lambda = E*nu/((1+nu)*(1-2*nu)) ; mu = E / (2*(1+nu));
-materials.hyperElasParams = { [ lambda  mu  ] } ;
-```
 
 ## elements
 
@@ -47,7 +44,7 @@ elements.elemTypeParams = { [], 1 };
 
 ## boundaryConds
 
- The elements are submitted to two different BC settings. The nodes $1$ and $3$ are fixed without applied loads (first BC), and node $2$ has a constraint in displacement and an applied load (second BC).
+ The elements are submitted to two different BC settings. The nodes $1$ and $3$ are fixed without applied loads (first BC), and node $2$ has a constraint in displacement and an applied load (second BC). The load factor function of the second BC is set so that the target load 1.5e8 is reached at 1 second. The density is set to zero, then no inertial effects are considered.
 
 ```
 boundaryConds.loadCoordSys = { []        ; 'global'   } ;
@@ -107,63 +104,56 @@ otherParams.plotParamsVector = [3];
 otherParams.controlDofs = [2 5 ];
 ```
 
-## ONSAS execution
-
+## Analysis case 1: NR with Rotated Eng Strain
+ In the first case ONSAS is run and the solution at the dof of interest is stored .
 ```
 [matUs, loadFactorsMat] = ONSAS( materials, elements, boundaryConds, initialConds, mesh, analysisSettings, otherParams ) ;
+controlDispsNREngRot =  -matUs(11,:) ;
+loadFactorsNREngRot  =  loadFactorsMat(:,2) ;
+```
+ and the analytical value of the load factors is computed
+```
+analyticLoadFactorsNREngRot = @(w) -2 * E*A* ...
+     ( (  (auxz+(-w)).^2 + auxx^2 - l0^2 ) ./ (l0 * ( l0 + sqrt((auxz+(-w)).^2 + auxx^2) )) ) ...
+  .* (auxz+(-w)) ./ ( sqrt((auxz+(-w)).^2 + auxx^2) )  ; 
 ```
 
 ```
+%~ %### Analysis case 2: NR-AL with SVK
+%~ %# The settings are changed:
+%~ materials.hyperElasModel  = { 'SVK'} ;
+%~ lambda = E*nu/((1+nu)*(1-2*nu)) ; mu = E / (2*(1+nu));
+%~ materials.hyperElasParams = { [ lambda  mu  ] } ;
+%~ analysisSettings.methodName    = 'arcLength' ;
+%~ analysisSettings.increm =   1e-6 ;
+%~ %# and the analysis is performed:
+%~ [matUs, loadFactorsMat ] = ONSAS( materials, elements, boundaryConds, initialConds, mesh, analysisSettings, otherParams ) ;
+%~ %#
+%~ controlDispsNRALSVK =  -matUs(11,:) ;
+%~ loadFactorsNRALSVK =  loadFactorsMat(:,2) ;
+```
 
-analyticFunc    = @(w) 2 * E * A * sin(ang1 * pi / 180 )^2 * w / L ;
+# Results verification
 
-numDisp =  -matUs(11,:) ;
-
+```
+lw = 2.0 ; ms = 11 ; plotfontsize = 22 ;
 figure
-plot( numDisp , loadFactorsMat(:,2) ,'b' )
+plot( controlDispsNREngRot, analyticLoadFactorsNREngRot( controlDispsNREngRot) ,'b-x' , 'linewidth', lw,'markersize',ms )
 hold on, grid on
-plot( numDisp , analyticFunc( numDisp),'r' )
-
-l0           = sqrt(auxx^2 + auxz^2) ;
-analyticFunc = @(w) -2 * E*A* ( (  (auxz+(-w)).^2 + auxx^2 - l0^2 ) ./ (l0 * ( l0 + sqrt((auxz+(-w)).^2 + auxx^2) )) ) ...
-            .* (auxz+(-w)) ./ ( sqrt((auxz+(-w)).^2 + auxx^2) )  ; 
-hold on, grid on
-plot( numDisp , analyticFunc( numDisp), 'g' )
-
-
-% ===============================================
-% methods comparison
-% ====================================
-% second case: newton raphson analysis
-% ===============================================
-% third case: NRarc-length analysis with dxf mesh
-% ----------------------------------------------------------------------
-% --- plots --
-%l0           = sqrt(auxx^2 + auxz^2) ;
-% analyticFunc = @(w) -2 * E*A* ( (  (auxz+(-w)).^2 + auxx^2 - l0^2 ) ./ (l0 * ( l0 + sqrt((auxz+(-w)).^2 + auxx^2) )) ) ...
-% .* (auxz+(-w)) ./ ( sqrt((auxz+(-w)).^2 + auxx^2) )  ; 
-%
-%% analytical solution using engineering strain
-% analyticFunc = @(w)  -2 * E*A* ( (  (auxz+(-w)).^2 + auxx^2 - l0^2 ) ./ (l0 * ( l0 + sqrt((auxz+(-w)).^2 + auxx^2) )) ) ...
- %~ .* (auxz+(-w)) ./ ( sqrt((auxz+(-w)).^2 + auxx^2) )  ; 
-%
-%~ lw = 2.0 ; ms = 11 ; plotfontsize = 22 ;
-%~ figure
-%~ plot( controlDispsNRAL, analyticNRAL ,'b-x' , 'linewidth', lw,'markersize',ms )
-%~ hold on, grid on
 %~ plot( controlDispsNRAL, loadFactorsNRAL,'r-s' , 'linewidth', lw,'markersize',ms )
-%~ plot( controlDispsNR, loadFactorsNR,'k-o' , 'linewidth', lw,'markersize',ms )
-%~ labx = xlabel('Displacement');   laby = ylabel('$\lambda$') ;
-%~ legend('analytic','NRAL-DXF','NR','location','North')
-%~ set(gca, 'linewidth', 1.2, 'fontsize', plotfontsize )
-%~ set(labx, 'FontSize', plotfontsize); set(laby, 'FontSize', plotfontsize) ;
+plot( controlDispsNREngRot, loadFactorsNREngRot, 'k-o' , 'linewidth', lw,'markersize',ms )
+labx = xlabel('Displacement');   laby = ylabel('$\lambda$') ;
+legend('analytic','NR-RotEng','location','North')
+set(gca, 'linewidth', 1.2, 'fontsize', plotfontsize )
+set(labx, 'FontSize', plotfontsize); set(laby, 'FontSize', plotfontsize) ;
+```
 
-
-
-
-
+```
   %~ [verifBoolean, numericalVals, analyticVals] = analyticSolVerif ...
     %~ ( analytSol, analyticFunc, loadFactors, controlDisps, timesVec, ...
     %~ analyticCheckTolerance, analyticSolFlag, problemName, printFlag, outputDir, plotParamsVector );
 
+[ analyticLoadFactorsNREngRot( controlDispsNREngRot)' loadFactorsNREngRot ]
+difLoad = analyticLoadFactorsNREngRot( controlDispsNREngRot)' - loadFactorsNREngRot ;
 
+verifBoolean = ( norm( difLoad ) / norm( loadFactorsNREngRot ) ) <  1e-4 

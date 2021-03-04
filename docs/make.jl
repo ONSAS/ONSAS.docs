@@ -29,9 +29,9 @@ makedocs(
     pages = [
         "Home" => "index.md",
         "Tutorials" => Any["Static Von-Mises Truss" =>  "tutorials/StaticVonMisesTruss/staticVonMisesTruss.md",
-                           "Uniaxial Extension Solid" => "tutorials/uniaxialExtension/uniaxialExtension.md"],
+                           "Heat Analytic" => "tutorials/HeatAnalytic/HeatAnalytic.md"],
         "Guide" => Any["Installation"     => "howtouse/install.md",
-                               "Creating Models"  => "howtouse/creatingModels.md"],
+                       "Creating Models"  => "howtouse/creatingModels.md"],
         "Theory" => Any["Virtual mechanical work " => "theory/prinMechWork.md",
                         "Virtual thermal work"     => "theory/prinTherWork.md",
 			            "References"               => "theory/references.md"  ],
