@@ -38,7 +38,7 @@ end
 const BIBLIOGRAPHY = Dict(cites .=> contents)
 
 # write references markdown file
-refpath = joinpath(@__DIR__, "src/references.md")
+refpath = joinpath(@__DIR__, "src/theory/references.md")
 
 open(refpath, "w") do f
     println(f, "# References\n")

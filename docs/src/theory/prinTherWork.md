@@ -1,26 +1,4 @@
-## equations
-
-ONSAS is developed to solve the set of nonlynear equations given by the Principle of Virtual Displacements (PVD) and the Principle of Virtual Temperatures (PVT). The PVD is given by the following set of nonlinear equations:
-
-```math
-\left(
-     \mathbf{f}_{mas}(\mathbf{u}_t, \dot{\mathbf{u}}_t, \ddot{\mathbf{u}}_t) 
-  +  \mathbf{f}_{vis}(\dot{\mathbf{u}}_t) 
-  +  \mathbf{f}_{int}(\mathbf{u}_t)
-  -  \mathbf{f}_{ext}(t)
-\right) \cdot \delta \mathbf{u} 
-=
-0 \qquad \forall \delta \mathbf{u} \in \tilde{\mathcal{U}}
-``` 
-
-The PVT is given by:
-
-```math
-\left(
-\nabla \cdot ( k \nabla T ) + Q_h  - \rho c \frac{\partial T}{\partial t}
-\right) \delta T =
-0 \qquad \forall \delta T \in \tilde{\mathcal{T}}
-```
+# Principle of Virtual Thermal Work
 
 ## Variational formulation of the heat flow equation
 
@@ -62,3 +40,29 @@ where $h$ is the convection coefficient and $T_\infty(t)$ is the ambient tempera
 ```
 
 where $q_{inp}$ is the input heat flow $q_{inp} = -f_N$.
+
+
+## Finite Elements
+
+
+
+```math
+\mathbf{K}_{diff}^e = \frac{ k^e A^e}{\ell^e} 
+\left[
+\begin{matrix}
+1 & -1 \\
+-1 & 1
+\end{matrix}
+\right]
+```
+
+```math
+\mathbf{C}_{intE}^e = \rho^e c^e A^e \ell^e \frac{1}{6} 
+\left[
+\begin{matrix}
+2 & 1 \\
+1 & 2
+\end{matrix}
+\right]
+```
+

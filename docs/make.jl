@@ -10,35 +10,32 @@ DocMeta.setdocmeta!(ONSAS_docs, :DocTestSetup,
 include("bibliography.jl")
 
 makedocs(
-    sitename = "ONSAS Documentation",
+    sitename = "ONSAS.m",
     modules = [ONSAS_docs],
-    
+
     # ---------------------------
     # case HTML output
         format = Documenter.HTML(prettyurls = get(ENV, "CI", nothing) == "true"),
-    
+
     # ---------------------------
-    
+
     # case PDF output
     #authors = "Authors",
     #format = LaTeX(platform = "none"),
     #makedocs(format = DocumenterLaTeX.LaTeX()),
-    
+
     # ---------------------------
-    
+
     pages = [
         "Home" => "index.md",
-        "About" => "about.md",
         "Tutorials" => Any["Static Von-Mises Truss" =>  "tutorials/StaticVonMisesTruss/staticVonMisesTruss.md",
-                           "Uniaxial Extension Solid" => "tutorials/uniaxialExtension/uniaxialExtension.md",
-                           "Simple pendulum" => "tutorials/SimplePendulum/simple_pendulum.md",
-                           "Heat diffusion" => "tutorials/HeatDiffusion/heat.md"],
-        "Theory" => Any["Equations" => "theory/equations.md", 
-                        "Solid Elements" => "theory/solidElements.md", 
-			"Heat Elements" => "theory/heatElements.md" ],
-        "How to use it" => Any["Installation" => "howtouse/install.md",
-                               "Creating Models" => "howtouse/creatingModels.md"],
-        "References" => "references.md",
+                           "Uniaxial Extension Solid" => "tutorials/uniaxialExtension/uniaxialExtension.md"],
+        "Guide" => Any["Installation"     => "howtouse/install.md",
+                               "Creating Models"  => "howtouse/creatingModels.md"],
+        "Theory" => Any["Virtual mechanical work " => "theory/prinMechWork.md",
+                        "Virtual thermal work"     => "theory/prinTherWork.md",
+			            "References"               => "theory/references.md"  ],
+        "About" => "about.md",
     ],
     strict = false
 )

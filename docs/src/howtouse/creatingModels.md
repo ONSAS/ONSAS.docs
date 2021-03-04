@@ -1,188 +1,129 @@
 # Creating structural models
 
-The structural models are defined through a set of variables definitions in a .m script.
+The data and properties of each structural model are defined through a set of definitions in a .m script. These properties are stored in [struct](https://octave.org/doc/v5.2.0/Structures.html#Structures) data structures. The following structs must be defined and provided as input to the ONSAS function in this order:
 
-## Required variables
+ 1. `materials`
+ 1. `elements`
+ 1. `boundaryConds`
+ 1. `initialConds`
+ 1. `mesh`
+ 1. `numericalMethod`
+ 1. `otherParams`
 
-* `Nodes`: matrix with the coordinates of all the nodes. The $i$-th row contains the three coordinates of the node $i$: $[x_i , \, y_i ,\, z_i]$,
-* `Conec`: cell structure with the connectivity information. The $\{i,1\}$ entry contains the vector with the MELCS (Material, Element, Load, CrossSection and Springs) indexes and the nodes of the $i$-th element.
-The structure of the cell is:
+Each struct has its own _fields_ with specific names, used to store each corresponding property or information. Each field is obtained or assiged using _structName.fieldName_. A description of each struct and its fields follows at next.
+
+## The `materials` struct
+
+The materials struct contains the information of the material behavior considered for each element.
+
+### `material.hyperElasModel`
+
+This is a cell array with the string-names of the material models used, the options for these names are:
+ * `'linearElastic'`: for linear behaviour in small strains and displacements. The scalar parameters of this model are $p_1=E$ the Young modulus and $p_2=\nu$ the Poisson's ratio.
+ * `'SVK'`: for a Saint-Venant-Kirchhoff material where the parameters $p_1$ and $p_2$ are the Lamé parameters and $\textbf{E}$ is the Green-Lagrange strain tensor, with the strain-energy density function given by
 ```math
-[ MaterialIndex, \, ElementIndex, \, LoadIndex, \, CrossSectionIndex, \, SpringIndex, \, Node_1 \dots Node_{n} ]
+\Psi( \textbf{E} ) = \frac{p_1}{2} tr(\textbf{E})^2 + p_2 tr(\textbf{E}^2)
+\quad
+p_1 = \frac{ E \nu }{ (1+\nu) (1-2\nu) }
+\quad
+p_2 = \frac{ E }{ 2 (1+\nu) }
 ```
-where the five indexes are natural numbers and $n$ is the number of nodes required by the type of element. If noproperty is assigned the $0$ index can be used. 
-* `materialsParams`: a cell structure with a vector with the material properties of the $i$-th type of material in the $i$-th entry.
-The vector of parameters is defined as:
+ * `'NHC'`: for a Neo-Hookean compressible material
+
+### `materials.hyperElasParams`
+A cell structure with vectors with the material properties of each material used in the model. The $i$-th entry of the cell, contains a vector like this:
 ```math
-[ \rho, \, k_{thCo}, \, c_{spHe}, \, hyperModel  p_1 \dots p_{n_P} ]
+[ p_1 \dots p_{n_P} ]
 ```
-where $k_{thCo}$ is the thermal conductivity (assuming thermal isotropy), $c_{spHe}$ is the specific heat, $n_P$ is the number of parameters of the constitutive model and $\mathbf{p}$ is the vector of constitutive parameters.
-* `elementsParams`: cell structure with the element types information. Each different type of element corresponds to a different number. The properties of the element are in correspondency of the ElementIndex defined in the Conec cell structure. The structure of the cell is:
+where $n_P$ is the number of parameters of the constitutive model and $\mathbf{p}$ is the vector of constitutive parameters.
+
+
+## The `elements` struct
+
+The elements struct contains the information about the type of finite elements used and their corresponding parameters.
+
+### `elements.elemType`
+cell structure with the string-names of the elements used: `node`, `truss`, `frame` or `tetra`.
+
+### `elements.elemTypeGeometry`
+
+cell structure with the information of the geometry of the element. For `truss` or `frame` elements a vector with the cross-section properties is required:
 ```math
-[ elemType_{1}, \dots, elemType_{n} ] 
+[ crossSectionType, \,\, crossSectionParam_{1}, \,\,\dots,\,\, crossSectionParam_{n}]
 ```
-* `crossSecsParams`: cell structure with the information of the cross section parameters. The $\{i,1\}$ entry contains the vector with the paremeters in correspondency with the CrossSectionIndex defined in the Conec cell structure. 
-The structure of the cell is:
+with $n$ being the number of parameters of the cross section type, and crossSectionType taking values: 1 (for general sections with given area and interias), 2 (for rectangular sections with given with thicknesses ``t_y`` and ``t_z``) and 3 (for circular sections with given diameter). See the `crossSectionProps.m` function for more details.
+
+## The `boundaryConds` struct
+
+### `boundaryConds.loadsCoordSys`
+cell containing the coordinates system for the loads applied in each BC, each entry should be a `'global'` string or a `'local'`, or an empty array if no load is applied in that BC setting `[]`.
+
+### `boundaryConds.loadsTimeFact`
+cell with the inline function definitions of load factors of the loads applied of an empty array.
+
+### `boundaryConds.loadsBaseVals`
+cell with the vector of the components of the load case
 ```math
-[crossSectionType, crossSectionParam_{1}, \dots, crossSectionParam_{n}]
+[ f_x,  \, m_x, \, f_y, \, m_y, \, f_z, \, m_z ]
 ```
-With $n$ being the number of parameters of the cross section type.
-* `springsParams`: cell structure with the information of the springs or supports in the structural model. The $\{i,1\}$ entry contains the vector with the paremeters in correspondency with the SpringIndex defined in the Conec cell structure. 
-The structure of the cell is:
+### `boundaryConds.userLoadsFileName`
+cell with filenames of `.m` function file provided by the user that can be used to apply other forces.
+
+### `boundaryConds.imposDispDofs`
+cell with vectors of the local degrees of freedom imposed (integers from 1 to 6)
+### `boundaryConds.imposDispVals`
+cell with vectors of the values of displacements imposed.
+### `boundaryConds.springsDofs`
+cell with vectors of the local degrees of freedom with springs (integers from 1 to 6)
+### `boundaryConds.springsVals`
+cell with vectors of the values of the springs stiffnesses.
+
+## The `initialConds` struct
+
+It initial conditions are homogeneous, then an empty struct should be defined `initialConds = struct() ;`.
+
+### `initialConds.nonHomogeneousInitialCondU0`
+matrix to set  the value of displacements at the time step $t$=0. [default: []]
+### `initialConds.nonHomogeneousInitialCondUdot0`
+matrix to prescribe the value of velocities at the time step $t$=0. [default: []]
+
+## The `mesh` struct
+
+The mesh struct contains the finite element mesh information.
+
+### `mesh.nodesCoords`
+matrix with the coordinates of all the nodes of the mesh. The $i$-th row contains the three coordinates of the node $i$: $[x_i , \, y_i ,\, z_i]$,
+
+### `mesh.conecCell`
+[cell array](https://octave.org/doc/v5.2.0/Cell-Arrays.html) with the elements and node-connectivity information. The $\{i,1\}$ entry contains the vector with the MEBI (Material, Element, boundaryConds and initialConds) indexes and the nodes of the $i$-th element. The structure of the vector at each entry of the cell is:
 ```math
-[ u_x, \theta_x, u_y, \theta_y, u_z, \theta_z ]
+ [ materialInd, \, elementInd, \, boundaryCondInd, \, initialCondInd, \, node_1 \dots node_{n} ]
 ```
-where each entry of the $i$-th type corresponds with the spring stiffness. In casse of ideal supports, the stiffness shall be assigned as $+\infty$.
-* `problemName`: string with the name of the problem, used to name folders and output files. 
-* `dirOnsas`: array with the directory of the file `ONSAS.m`.
+where the five indexes are natural numbers and $n$ is the number of nodes required by the type of element. If noproperty is assigned the $0$ index can be used, for instance, nodes used to introduced loads should be defined with `materialIndex = 0`.
 
-### Material parameters
+## The `analysisSettings` struct
 
-* `Model 1`: Linear material with small strains (Saint-Venant-Kirchhoff).  
-* `Model 2`: Linear material with Green Lagrange strains (Saint-Venant-Kirchhoff).  
-* `Model 3`: Linear material with rotated engineering strains (Saint-Venant-Kirchhoff).  
+This struct contains the parameters required to apply the numerical method for the resolution of the nonlinear equations:
 
-### Elements params
-  The `elementsParams` cell contains a vector in each entry. The first entry of each vector contains the type of element, for each type of element a different set of optional parameters can be included as other entries of the vector. These are the available types of elements:
+ * `methodName`: string with the name of the method used: `'newtonRaphson'`,`'arcLength'`,`'newmark'`,`'alphaHHT'`.
+ * `stopTolDeltau`: float with tolerance for convergence in relative norm of displacements increment
+ * `stopTolForces`: float with tolerance for convergence in relative norm of residual loads
+ * `stopTolIts`: integer with maximum number of iterations per time step
+ * `deltaT`: time step
+ * `finalTime`: final time of simulation
+ * `incremArcLen`: with of cylinder for arcLength method
+ * `deltaNM`: delta parameter of newmark method
+ * `alphaNM`: alpha paramter of newmark method
+ * `alphaHHT`: alpha parameter of alpha-HHT method
 
-1. Node: used to add loads or spring conditions.
-1. Truss: the vector used for the truss element is:
+another additional optional parameters are:
 
-   ```math 
-   [ 2 \quad booleanConsistentMassMat ]
-   ```
+ * `nodalDispDamping`: scalar value of linear external viscous damping for the displacements degrees of freedom [default: 0]
+ * `iniMatUs`: a matrix with initial solutions for each time step.
 
-   Where `booleanConsistentMassMat` is a boolean that sets if the consistent or lumped form of the mass matrix is used.
+## The `otherParams` struct
 
-1. Frame: the vector used for the frame element is:
-
-   ``` math 
-   [ 3 ]
-   ```
-   
-   No additional parameter is needed for the frame element.
-   
-1. Tetrahedron: the vector used for the thetrahedron element is:
-
-   ``` math 
-   [ 4 \quad consMatFlag ] 
-   ```
-   
-   Where `consMatFlag` is a parameter that allows the user to choose the method of computation the constitutive matrix. This parameter can take the values `1` and `2` corresponding to the computation of the constitutive matrix using the complex-step expression and analytical expression respectively.
-   If the element is modeled as a Neo-Hookean compresible material, the value of the `consMatFlag` shall be 1. The default value is 2. 
-   
-1. Triangle: (used as faces to include boundary conditions) 
-
-   ``` math 
-   [ 5 ] 
-   ```
-
-### Loads params
-
-Cell structure with a vector with parameters given by:
-
-```math
-[ global/local,\,  variable/constant,\,  f_x,\, m_x,\,  f_y,\, m_y,\,  f_z,\,  m_z,  q ]
-```
-where $q$ is an optional entry representing the input heat flow. In addition, the user can provide forces varying in time with the following optional variables:
-
-* `loadFactorsFunc` (optional): function that defines forces applied on the structure variable in time. [default: t]
-* `userLoadsFileName` (optional): filename of `.m` function file provided by the user that can be used to apply other forces varying.
-
-### Cross-section parameters
-
-1. General section:
-
-   ```math
-   [ 1,A,I_x,I_y,I_z,(J_x,J_y,J_z) ]
-   ```
-   
-   Where $A$, $Ix$, $Iy$ and $Iz$ corresponds to the cross section area, the torsional stiffness and the bending stiffnesses respectively.
-
-1. Rectangular cross section:
-
-   ```math  
-   [2,w_y,w_z]
-   ```
-   
-   Where $w_y$ and $W_z$ corresponds to the dimension parallel to the $y$ and $z$ local axes respectively.
-
-1. Solid circular cross section:
-   
-   ```math 
-   [3,D]
-   ```
-
-## Optional variables
-
-### General variables:
-
-List of optional general variables:
-
-* `reportBoolean`: boolean to set if LaTeX report is generated (1) or not (0). [default: 1] - currently not working
-* `booleanScreenOutput`: boolean to set the output of the results on the command window. [default: 1]
-* `storeBoolean`: boolean to store the results of the current iteration such as the displacements, tangent matrices, normal forces and stresses. [default: 1]
-* `plotParamsVector`: array to set the type of output to visualize the results. [default: 1]
-* `plotsViewAxis`: array to set the point of view of the Octave plots. [default: []]
-
-
-### Modeling variables:
-
-List of optional modelling variables:
-
-* `booleanSelfWeightZ`: boolean to consider the selfweight of the elements in the analysis. [default: 0] 
-* `stabilityAnalysisBoolean`: boolean to perform stability analysis compute eigenvalues of tangent matrix. [default: []]
-* `nodalDisDamping`: scalar value of external viscous damping for displacements degrees of freedom [default: 0]
-* `nonHomogeneousInitialCondU0`: matrix to set  the value of displacements at the time step $t$=0. [default: []]
-* `nonHomogeneousInitialCondUdot0`: matrix to prescribe the value of velocities at the time step $t$=0. [default: []]
-* `analyticSolFlag`: flag indicating if an analytical solution is provided, if so a function must be defined. [default: 0]
-* `analyticCheckTolerance`: tolerance considered for the analytic verification. [default: 1e-8]
-* `controlDofs: vector with information of the degree of freedom used to compare numerical vs analytical solution. [default: []]
-
-$$
-controlDofs = [ node nodaldof scalefactor ]
-$$ 
-
-with node being the node number, nodaldof being the local dof of the node (1 for x displacement, 2 for x angle ... 6), and scale factor being a scale factor to multiply the value before plotting.
-
-* `numericalMethodParams`: array with parameters of the numerical method used to solve the equations. [default: []]
-
-The structure of the array for the available numerical methods is:
-
-```math
-\left\{
-\begin{array}{ccccccc}
-[\; &0,\; &stopTolDeltau,\; &stopTolForces,\; &stopTolIts,\; &targetLoadFactr,\; &nLoadSteps,\; & ] \\
-[\; &1,\; &stopTolDeltau,\; &stopTolForces,\; &stopTolIts,\; &targetLoadFactr,\; &nLoadSteps,\; & ] \\
-[\; &2,\; &stopTolDeltau,\; &stopTolForces,\; &stopTolIts,\; &targetLoadFactr,\; &nLoadSteps,\; &incremArcLen ] \\
-[\; &3,\; &deltaT,\; &finalTime,\; &stopTolDeltau,\; &stopTolForces,\; &stopTolIts,\; &deltaNW,\; &AlphaNW ] \\
-[\; &4,\; &deltaT,\; &finalTime,\; &stopTolDeltau,\; &stopTolForces,\; &stopTolIts,\; &alphaHHT,\; & ] \\
-\end{array}
-\right\}
-\begin{array}{ccccccc}
-Linear\;static\;analysis \\
-Non-Linear\;analysis\;Newton-Raphson \\
-Non-Linear\;analysis\;Newton-Raphson\;Arc-Length \\
-Dynamic\;analysis\;Newmark \\
-Dynamic\;analysis\;HHT \\
-\end{array}
-```
-
-
-
-### Analytical solution verification
-
-The user can provide analytical solutions, which are automatically compared with the numerical solution provided by ONSAS. The solutions can be provided through different methods or formats, which are set by the variable __analyticSolFlag__. The formats of the solutions and the corresponding error measures used for the validation are:
-
-* analyticSolFlag = 1: $u_{A,t}$ function of control displacement as a function of time is provided. In this case the error measure is calculated as 
-```math
-normRelativeError =\frac{1}{t_f} \left\| \frac{  u_{N,t} - u_{A,t}  }{ u_{A,t}  } \right\|_{L_1[0,t_f]} 
-```
-* analyticSolFlag = 2: in this case the user provides the function \verb|analyticFunc| with one argument $\lambda(u)$. This function computes the loadFactor as a function of the control displacement value. After the analysis and given an obtained numerical displacements history $u_{N,t}$, the analytical load factor history $\lambda(u_{N,t})$ is calculated and compared with the $\lambda_{N,t}$ values
-```math
-	normRelativeError = \frac{ \left\| \lambda( u_{N,t}) - \lambda_{N,t} \right\|_{L_1[0,t_f]} }{ \left\| \lambda_{N,t} \right\|_{L_1[0,t_f]}  }  
-```
-
-
-
-
+  * `problemName`: string with the name of the problem, to be used in outputs.
+  * `plotParamsVector`: 3 for vtk output
+  * `controlDofs`: matrix with information of the degrees of freedom to compute and control. Each row should contain this form: `[ node localdof ]`.
+  * `storeBoolean`: boolean to store the results of the current iteration such as the displacements, tangent matrices, normal forces and stresses. [default: 1]

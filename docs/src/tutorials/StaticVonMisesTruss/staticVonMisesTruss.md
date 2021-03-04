@@ -1,116 +1,169 @@
-# Static Von-Mises Truss
+# Static Von Mises Truss example
+---
 
-In this tutorial, the static Von Mises Truss is considered. The aim of this example is to validate the Arc Length numerical method implementation by comparing the results provided by ONSAS with the analytical solution. 
+In this tutorial, the Static Von Mises Truss example and its resolutions using ONSAS are described. The aim of this example is to validate the Newton-Raphson and the Arc-Length methods implementation by comparing the results provided by ONSAS with the analytical solution.
+ 
+The structural model is formed by two truss elements as it is shown in the figure, with the node $2$ submitted to a nodal load $P$ and restrained to movement in the $x-z$ plane and nodes $1$ and $3$ fixed.
 
-The structural model can be seen in the following figure.
+![structure diagram](vonMisesTruss.svg)
 
-![](vonMisesTruss.svg)
-
-The bars are composed of an isotropic elastic and homogeneous material, with elastiity modulus $E$, Poisson coefficient $\nu$=0 and length $L$. The node $2$ is subjected to a variable nodal load $P$ as shown in the figure. The self weight of the bars is neglected, so $\rho$=0.
-
-
-
-## MELCS parameters
-
-The modelling of the structure begins with the definition of the MELCS parameters. 
-
-### materialParams
-
-Since both bars are composed of the same material, the cell of `materialParams` only has one vector, being:
-
-```math
-materialParams = \{[\;\rho,\;1,\;E,\;\nu\;]\}
+The Octave script is avaiable at: [RUTA]()
+ 
+Before defining the structs, the workspace is cleaned, the ONSAS directory is added to the path and scalar auxiliar parameters are defined.
+```
+close all, clear all ;
+addpath( [ pwd '/../../src'] ); 
+E = 210e9 ;  A = 2.5e-3 ; ang1 = 65 ; L = 2 ; nu = 0 ;
+auxx = cos( ang1*pi/180 ) * L ;  auxz = sin( ang1*pi/180 ) * L ;
 ```
 
-### elementParams
+## MEBI parameters
+------------------
 
-Two different types of elements are considered, the nodes and the bars. The nodes will be assigned with the index $1$ and the bars with the index $2$. The `elementsParams` cell is therefore:
+The modelling of the structure begins with the definition of the Material-Element-BoundaryConditions-InitialConditions (MEBI) parameters.
 
-```math
-elementParams = \{ 1,\;2 \}
+### materials
+ Since both bars are formed by the same material all the fields of the `materials` struct will have only one entry. contains only one vector. The constitutive behavior is the SaintVenantKirchhoff:
+```
+materials.hyperElasModel  = { 'SVK'} ;
+```
+ and the parameters of this model are the Lamé parameters
+```
+lambda = E*nu/((1+nu)*(1-2*nu)) ; mu = E / (2*(1+nu));
+materials.hyperElasParams = { [ lambda  mu  ] } ;
 ```
 
-### loadsParams
+## elements
 
-Only the nodal load $P$ is applied to the structure and its direction corresponde to the global axis $z$. Consequently, the `loadsParams` cell only contains one vector, being:
-
-```math
-loadsParams = \{[\;1,\;1,\;0,\;0,\;0,\;0,\;-1,\;0\;]\}
+Two different types of elements are considered, node and truss. The nodes will be assigned in the first entry (index $1$) and the truss at the index $2$. The elemType field is then:
+```
+elements.elemType = { 'node','truss' } ;
+```
+ for the geometries, the node has not geometry to assign (empty array), and the truss elements will be set as a square-cross section, then the elemTypeGeometry field is:
+```
+elements.elemTypeGeometry = { [], [2 sqrt(A) sqrt(A) ] };
+elements.elemTypeParams = { [], 1 };
 ```
 
-### crossSecsParams
+## boundaryConds
 
-Both bars are composed of a square cross section with area $A$. Therefore, the `crossSecsParams` cell results in:
+ The elements are submitted to two different BC settings. The nodes $1$ and $3$ are fixed without applied loads (first BC), and node $2$ has a constraint in displacement and an applied load (second BC).
 
-```math
-crossSecsParams = \{[\;2,\;\sqrt{A},\;\sqrt{A}\;]\}
+```
+boundaryConds.loadCoordSys = { []        ; 'global'   } ;
+boundaryConds.loadTimeFact = { []        ; @(t) 1.5e8*t     } ;
+boundaryConds.loadBaseVals = { []        ; [ 0 0 0 0 -1 0 ] } ;
+boundaryConds.impoDispDofs = { [ 1 3 5 ] ; 3          } ;
+boundaryConds.impoDispVals = { [ 0 0 0 ] ; 0          } ;
 ```
 
-### springsParams
-
-Two tifferent types of springs are considered. The nodes $1$ and $3$ are pinned and corresponds to one type of spring, the node $2$ has the displacement about the global axis $y$ restrained. The degrees of freedom are considered fully restrained so, the stiffness of the springs are considered as $+\infty$ in the direction that the restrain occurs. The `springsParams` cell is:
-
-```math
-crossSecsParams = \Bigg\{
-\begin{array}{l}
-[&\;\infty,\;0,\;\infty,\;0,\;\infty,\;0\;&] \\
-[&\;0,\;0,\;\infty,\;0,\;0,\;0\;&]
-\end{array}
-\Bigg\}
+## initial Conditions
+ homogeneous initial conditions are considered, then an empty struct is set:
+```
+initialConds                = struct() ;
 ```
 
-## Nodes and Conec matrices
-
-The bars form an angle $\theta$=65$^o$ with the global axis $x$ direction. Then, the node coordinates can be obtained by simple algebra. The `Nodes` matrix results:
-
-### Nodes matrix
-
-```math
-Nodes = \Bigg[
-\begin{array}{ccc}
-0 & 0 & 0 \\
-auxx & 0 & auxz \\
-2*auxx & 0 & 0 
-\end{array}
-\Bigg]
-\begin{array}{ccc}
-Node\;1 \\
-Node\;2 \\
-Node\;3 
-\end{array}
+## mesh parameters
+The coordinates of the nodes of the mesh are given by the matrix:
+```
+mesh.nodesCoords = [      0  0     0  ; ...
+                       auxx  0  auxz  ; ...
+                     2*auxx  0     0  ] ;
+```
+The connectivity is introduced using the _conecCell_. Each entry of the cell contains a vector with the four indexes of the MEBI parameters, followed by the indexes of the nodes of the element (node connectivity). For didactical purposes each element entry is commented. First the cell is initialized:
+```
+mesh.conecCell = { } ;
+```
+ then the first two nodes are defined, both with material zero (since nodes dont have material), the first element type (the first entry of the cells of the _elements_ struct), and the first entry of the cells of the boundary conditions struct. No non-homogeneous initial condition is considered (then zero is used) and finally the node is included.
+```
+mesh.conecCell{ 1, 1 } = [ 0 1 1 0  1   ] ; 
+mesh.conecCell{ 2, 1 } = [ 0 1 1 0  3   ] ; 
+```
+ the following case only differs in the boundary condition
+```
+mesh.conecCell{ 3, 1 } = [ 0 1 2 0  2   ] ; 
+```
+ the truss elements are formed by the first material, the second type of element, and no boundary condition is applied.
+```
+mesh.conecCell{ 4, 1 } = [ 1 2 0 0  1 2 ] ;
+mesh.conecCell{ 5, 1 } = [ 1 2 0 0  2 3 ] ; 
 ```
 
-Where the variables `auxx` and `auxz` are defined as:
-
-```math
-\begin{array}{l}
-auxx\;=\;\cos\left(\dfrac{\theta*\pi}{180}\right)*L \\
-auxz\;=\;\sin\left(\dfrac{\theta*\pi}{180}\right)*L
-\end{array}
+## analysisSettings
+```
+analysisSettings.methodName    = 'newtonRaphson' ;
+analysisSettings.deltaT        = 0.1 ;
+analysisSettings.finalTime     =   1 ;
+analysisSettings.stopTolDeltau =   1e-6 ;
+analysisSettings.stopTolForces =   1e-6 ;
+analysisSettings.stopTolIts    =   10 ;
+analysisSettings.finalTime     =   1 ;
 ```
 
-### Conec matrix
-
-The Conec cell contains the information defined by the MELCS parameters and also the joint connectivity of the elements. Then, the first five indexes of each vector in the Conec matrix corresponds to the MELCS parameters and the last ones to the joint connectivity of the corresponding element. The Conec cell is defined as:
-
-```math
-\left\{
-\begin{array}{ccccccc}
-[\; &0,\; &1,\; &0,\; &0,\; &1,\; &1\;& ] \\
-[\; &0,\; &1,\; &1,\; &0,\; &2,\; &2\;& ] \\
-[\; &0,\; &1,\; &0,\; &0,\; &1,\; &3\;& ] \\
-[\; &1,\; &2,\; &0,\; &1,\; &0,\; &1,\;&2 ] \\
-[\; &1,\; &2,\; &0,\; &1,\; &0,\; &2,\;&3 ] \\
-\end{array}
-\right\}
-\begin{array}{ccccccc}
-Fixed\;node \\
-Loaded\;node \\
-Fixed\;node \\
-Truss\;element \\
-Truss\;element
-\end{array}
+## otherParams
+```
+otherParams.problemName = 'staticVonMisesTruss_NR';
+otherParams.plotParamsVector = [3];
+otherParams.controlDofs = [2 5 ];
 ```
 
+## ONSAS execution
+
+```
+[matUs, loadFactorsMat] = ONSAS( materials, elements, boundaryConds, initialConds, mesh, analysisSettings, otherParams ) ;
+```
+
+```
+
+analyticFunc    = @(w) 2 * E * A * sin(ang1 * pi / 180 )^2 * w / L ;
+
+numDisp =  -matUs(11,:) ;
+
+figure
+plot( numDisp , loadFactorsMat(:,2) ,'b' )
+hold on, grid on
+plot( numDisp , analyticFunc( numDisp),'r' )
+
+l0           = sqrt(auxx^2 + auxz^2) ;
+analyticFunc = @(w) -2 * E*A* ( (  (auxz+(-w)).^2 + auxx^2 - l0^2 ) ./ (l0 * ( l0 + sqrt((auxz+(-w)).^2 + auxx^2) )) ) ...
+            .* (auxz+(-w)) ./ ( sqrt((auxz+(-w)).^2 + auxx^2) )  ; 
+hold on, grid on
+plot( numDisp , analyticFunc( numDisp), 'g' )
+
+
+% ===============================================
+% methods comparison
+% ====================================
+% second case: newton raphson analysis
+% ===============================================
+% third case: NRarc-length analysis with dxf mesh
+% ----------------------------------------------------------------------
+% --- plots --
+%l0           = sqrt(auxx^2 + auxz^2) ;
+% analyticFunc = @(w) -2 * E*A* ( (  (auxz+(-w)).^2 + auxx^2 - l0^2 ) ./ (l0 * ( l0 + sqrt((auxz+(-w)).^2 + auxx^2) )) ) ...
+% .* (auxz+(-w)) ./ ( sqrt((auxz+(-w)).^2 + auxx^2) )  ; 
+%
+%% analytical solution using engineering strain
+% analyticFunc = @(w)  -2 * E*A* ( (  (auxz+(-w)).^2 + auxx^2 - l0^2 ) ./ (l0 * ( l0 + sqrt((auxz+(-w)).^2 + auxx^2) )) ) ...
+ %~ .* (auxz+(-w)) ./ ( sqrt((auxz+(-w)).^2 + auxx^2) )  ; 
+%
+%~ lw = 2.0 ; ms = 11 ; plotfontsize = 22 ;
+%~ figure
+%~ plot( controlDispsNRAL, analyticNRAL ,'b-x' , 'linewidth', lw,'markersize',ms )
+%~ hold on, grid on
+%~ plot( controlDispsNRAL, loadFactorsNRAL,'r-s' , 'linewidth', lw,'markersize',ms )
+%~ plot( controlDispsNR, loadFactorsNR,'k-o' , 'linewidth', lw,'markersize',ms )
+%~ labx = xlabel('Displacement');   laby = ylabel('$\lambda$') ;
+%~ legend('analytic','NRAL-DXF','NR','location','North')
+%~ set(gca, 'linewidth', 1.2, 'fontsize', plotfontsize )
+%~ set(labx, 'FontSize', plotfontsize); set(laby, 'FontSize', plotfontsize) ;
+
+
+
+
+
+  %~ [verifBoolean, numericalVals, analyticVals] = analyticSolVerif ...
+    %~ ( analytSol, analyticFunc, loadFactors, controlDisps, timesVec, ...
+    %~ analyticCheckTolerance, analyticSolFlag, problemName, printFlag, outputDir, plotParamsVector );
 
 
