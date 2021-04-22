@@ -29,7 +29,7 @@ makedocs(
     pages = [
         "Home" => "index.md",
         "Tutorials" => Any["Static Von-Mises Truss" =>  "tutorials/StaticVonMisesTruss/staticVonMisesTruss.md",
-                           "Heat Analytic" => "tutorials/HeatAnalytic/HeatAnalytic.md"],
+                           "Cantilever Beam" => "tutorials/CantileverBeam/cantileverBeam.md"],
         "Guide" => Any["Installation"     => "howtouse/install.md",
                        "Creating Models"  => "howtouse/creatingModels.md"],
         "Theory" => Any["Virtual mechanical work " => "theory/prinMechWork.md",
