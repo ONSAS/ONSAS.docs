@@ -6,22 +6,13 @@ ONSAS can be used to solve the set of nonlynear equations given by the Principle
 
 ```math
 \left(
-     \mathbf{f}_{mas}(\mathbf{u}_t, \dot{\mathbf{u}}_t, \ddot{\mathbf{u}}_t) 
-  +  \mathbf{f}_{vis}(\dot{\mathbf{u}}_t) 
+     \mathbf{f}_{mas}(\mathbf{u}_t, \dot{\mathbf{u}}_t, \ddot{\mathbf{u}}_t)
+  +  \mathbf{f}_{vis}(\dot{\mathbf{u}}_t)
   +  \mathbf{f}_{int}(\mathbf{u}_t)
   -  \mathbf{f}_{ext}(t)
-\right) \cdot \delta \mathbf{u} 
+\right) \cdot \delta \mathbf{u}
 =
 0 \qquad \forall \delta \mathbf{u} \in \tilde{\mathcal{U}}
-``` 
-
-The PVT is given by:
-
-```math
-\left(
-\nabla \cdot ( k \nabla T ) + Q_h  - \rho c \frac{\partial T}{\partial t}
-\right) \delta T =
-0 \qquad \forall \delta T \in \tilde{\mathcal{T}}
 ```
 
 
@@ -43,7 +34,7 @@ N_4(\xi) = \xi_2
 
 The functions can be expressed in vector form
 ```math
-  \textbf{ N } = 
+  \textbf{ N } =
   \left[
 \begin{matrix}
 N_{1} \\
@@ -90,8 +81,8 @@ The material-isoparametric coordinates relation is given by:
 ```
 and using the chain rule we obtain:
 ```math
-\frac{\partial \textbf{N}}{ \partial \textbf{X}} = 
-\frac{\partial \textbf{N}}{ \partial \xi } . \frac{\partial \xi }{ \partial \textbf{X} } 
+\frac{\partial \textbf{N}}{ \partial \textbf{X}} =
+\frac{\partial \textbf{N}}{ \partial \xi } . \frac{\partial \xi }{ \partial \textbf{X} }
 ```
 
 Then using the inverse theorem we obtain:
@@ -102,4 +93,3 @@ Then using the inverse theorem we obtain:
 ```math
 \nabla \textbf{u} = eleDispsMat . \left( eleCoordMat .  \frac{\partial \textbf{N}}{ \partial \xi } \right)^{-1}
 ```
-

@@ -43,7 +43,7 @@ where $n_P$ is the number of parameters of the constitutive model and $\mathbf{p
 The elements struct contains the information about the type of finite elements used and their corresponding parameters.
 
 ### `elements.elemType`
-cell structure with the string-names of the elements used: `node`, `truss`, `frame` or `tetra`.
+cell structure with the string-names of the elements used: `node`, `truss`, `frame`, `triangle` or `tetrahedron`.
 
 ### `elements.elemTypeGeometry`
 
@@ -66,6 +66,8 @@ cell with the vector of the components of the load case
 ```math
 [ f_x,  \, m_x, \, f_y, \, m_y, \, f_z, \, m_z ]
 ```
+where $f_i$ are the components of forces and $m_i$ are the moments. Both forces or moments are considered per unit of length in the case of `truss`/`frame` elements, or per unit of area in the case of `triangle`.
+
 ### `boundaryConds.userLoadsFileName`
 cell with filenames of `.m` function file provided by the user that can be used to apply other forces.
 

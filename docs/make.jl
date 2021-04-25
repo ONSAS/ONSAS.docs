@@ -33,8 +33,7 @@ makedocs(
         "Guide" => Any["Installation"     => "howtouse/install.md",
                        "Creating Models"  => "howtouse/creatingModels.md"],
         "Theory" => Any["Virtual mechanical work " => "theory/prinMechWork.md",
-                        "Virtual thermal work"     => "theory/prinTherWork.md",
-			            "References"               => "theory/references.md"  ],
+                        "References"               => "theory/references.md"  ],
         "About" => "about.md",
     ],
     strict = false
