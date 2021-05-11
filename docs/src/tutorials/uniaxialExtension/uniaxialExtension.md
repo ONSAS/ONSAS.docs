@@ -1,58 +1,230 @@
-# Uniaxial Extension Solid
-
-## The problem
-
-In this tutorial an elastic Saint-Venant-Kirchhoff solid submitted to a uniaxial loading test is considered. The geometry is given by a rectangular cuboid with dimensions $L_x=1$, $L_y=1$ and $L_z=1$, and a tension vector $p = 3 \textbf{e}_x$ is applied on the face at $x=L_x$.
-
-## The ONSAS example file
-
-The main features of the onsasExample_uniaxialExtension.m file are described in this section.
-
-### MELCS parameters
-
-Before creating the finite element mesh discretization, the MELCS parameters shall be defined. The material properties of the model are defined by
+# Example uniaxialSolid
+---
 ```
-materialsParams = {[ 0 2 E nu ]} ;
-```
-where the first entry of the vector is the density (considered zero), the second is the constitutive behavior (2 for SVK material) and $E = 1$ and $\nu = 0.3$ are the constitutive parameters of the SVK model.
+% Elastic solid submitted to uniaxial loading. 
+% Geometry given by $L_x$, $L_y$ and $L_z$, tension $p$ applied on 
+% face $x=L_x$.
 
-For the elements, two types of elements are used in the model: triangles (number 5) for loading and spring boundary conditions, and tetrahedra (number 4).
-```
-elementsParams = { [ 5   ] ; ...
-                   [ 4 2 ] } ; % analytic constitutive tensor
-```
-where the second entry of the vector in the second entry of the cell is the flag corresponding to the method for computation of the constitutive matrix (2 for analytical).
+clear all, close all
 
+%% set ONSAS.m directory
+dirOnsas = [ pwd '/../../src' ] ; addpath( dirOnsas );
+otherParams.problemName = 'uniaxialExtension_Manual' ;
 
-```
-loadsParams = {[ 1 1  p 0 0 0 0 0 ]} ;  % global coords tension applied
-```
-
-```
-crossSecsParams = cell(1,1) ; %
-```
-
-```
-springsParams = {[ inf 0  0   0   0   0 ] ; ...
-                 [ 0   0  inf 0   0   0 ] ; ...
-                 [ 0   0  0   0   inf 0 ] } ;
-
-```
+%% Structural properties
+E = 1 ; nu = 0.3 ;
+p = 3 ; Lx = 1 ; Ly = 1 ; Lz = 1 ;
 
 
-### Mesh
-The solid is discretized using a mesh formed by 8 nodes with the following coordinates matrix
-```
+lambda = E*nu/((1+nu)*(1-2*nu)) ; mu = E/(2*(1+nu)) ;
+materials.hyperElasModel = {'SVK'} ;
+materials.hyperElasParams = { [ lambda mu ] } ;
+
+
+elements.elemType = { 'triangle', 'tetrahedron' } ;
+elements.elemTypeParams = { [];[] } ;
+elements.elemTypeGeometry = { [];[] } ;
+
+boundaryConds.loadsCoordSys = {'global'; [] ; [] ; [] } ;
+boundaryConds.loadsTimeFact = { @(t) p*t ; [] ; [] ; []} ;
+boundaryConds.loadsBaseVals = { [1 0 0 0 0 0 ] ; [] ; [] ; [] } ;
+boundaryConds.imposDispDofs = { [] ; [1] ; [3] ; [5] } ;
+boundaryConds.imposDispVals = { [] ; [0] ; [0] ; [0] } ;
+
+
+initialConds = struct();
+
+% tension applied and x, y, z dimensions
+
+% an 8-node mesh is considered with its connectivity matrix
+mesh.nodesCoords = [ 0    0    0 ; ...
+                     0    0   Lz ; ...
+                     0   Ly   Lz ; ...
+                     0   Ly    0 ; ...
+                     Lx   0    0 ; ...
+                     Lx   0   Lz ; ...
+                     Lx  Ly   Lz ; ...
+                     Lx  Ly    0 ] ;
+
+mesh.conecCell = {[ 0 1 1 0    5 8 6   ]; ... % loaded face
+                  [ 0 1 1 0    6 8 7   ]; ... % loaded face
+                  [ 0 1 2 0    4 1 2   ]; ... % x=0 supp face
+                  [ 0 1 2 0    4 2 3   ]; ... % x=0 supp face
+                  [ 0 1 3 0    6 2 1   ]; ... % y=0 supp face
+                  [ 0 1 3 0    6 1 5   ]; ... % y=0 supp face
+                  [ 0 1 4 0    1 4 5   ]; ... % z=0 supp face
+                  [ 0 1 4 0    4 8 5   ]; ... % z=0 supp face
+                  [ 1 2 0 0    1 4 2 6 ]; ... % tetrahedron
+                  [ 1 2 0 0    6 2 3 4 ]; ... % tetrahedron
+                  [ 1 2 0 0    4 3 6 7 ]; ... % tetrahedron
+                  [ 1 2 0 0    4 1 5 6 ]; ... % tetrahedron
+                  [ 1 2 0 0    4 6 5 8 ]; ... % tetrahedron
+                  [ 1 2 0 0    4 7 6 8 ]  ... % tetrahedron
+                } ;
+       
+% ----------------------------------------------------------------------
+
+%% --- Analysis parameters ---
+analysisSettings.methodName = 'newtonRaphson' ;
+analysisSettings.stopTolIts       = 30      ;
+analysisSettings.stopTolDeltau    = 1.0e-12 ;
+analysisSettings.stopTolForces    = 1.0e-12 ;
+analysisSettings.finalTime        = 1       ;
+analysisSettings.deltaT           = .1      ;
+
+%~ controlDofs = [ 7 1 1 ] ;
+
+%~ storeBoolean = 1 ;
+
+%% Output parameters
+otherParams.plotParamsVector = [ 3 ] ;
+%~ printflag = 2 ;
+
+%~ % --- Analytic sol ---
+%~ analyticSolFlag        = 2 ;
+%~ analyticCheckTolerance = 1e-8 ;
+%~ analyticFunc           = @(w) 1/p * E * 0.5 * ( (1 + w/Lx).^3 - (1+w/Lx) ) ;
+
+[matUs, loadFactorsMat] = ONSAS( materials, elements, boundaryConds, initialConds, mesh, analysisSettings, otherParams ) ;
+
+
+%~ figure
+%~ plot(matU)
+return
+Conec = {[ 0 1 1 0 0   5 8 6   ]; ... % loaded face
+         [ 0 1 1 0 0   6 8 7   ]; ... % loaded face
+         [ 0 1 0 0 1   4 1 2   ]; ... % x=0 supp face
+         [ 0 1 0 0 1   4 2 3   ]; ... % x=0 supp face
+         [ 0 1 0 0 2   6 2 1   ]; ... % y=0 supp face
+         [ 0 1 0 0 2   6 1 5   ]; ... % y=0 supp face
+         [ 0 1 0 0 3   1 4 5   ]; ... % z=0 supp face
+         [ 0 1 0 0 3   4 8 5   ]; ... % z=0 supp face
+         [ 1 2 0 0 0   1 4 2 6 ]; ... % tetrahedron
+         [ 1 2 0 0 0   6 2 3 4 ]; ... % tetrahedron
+         [ 1 2 0 0 0   4 3 6 7 ]; ... % tetrahedron
+         [ 1 2 0 0 0   4 1 5 6 ]; ... % tetrahedron
+         [ 1 2 0 0 0   4 6 5 8 ]; ... % tetrahedron
+         [ 1 2 0 0 0   4 7 6 8 ]  ... % tetrahedron
+        } ;
+
+iniMatUs = matUs ;
+storeBoolean = 0 ;
+
+ONSAS
+
+% --------------------------------------------------------
+
+clear iniMatUs
+
+
+controlDispsValsCase1         = controlDisps  ;
+loadFactorAnalyticalValsCase1 = analyticVals  ;
+loadFactorNumericalValsCase1  = numericalVals ;
+
+close all
+
+% --------------------------------------------------------
+% solid model using gmsh mesh, local tension load and complex step 
+% --------------------------------------------------------
+
+problemName = 'uniaxialExtension_GMSH_ComplexStep' ;
+
+[ Nodes, Conec ] = meshFileReader( 'geometry_uniaxialExtension.msh' ) ;
+
+loadsParams{1,1}    = [ 0 1  0 0 0 0 p 0 ] ; % local coords appliend tension
+
+elementsParams{2,1} = [ 4 1 ] ; % complex step constitutive tensor
+
+plotParamsVector = [ 0 ] ;
+analyticSolFlag        = 0 ;
+
+% run ONSAS
+ONSAS
+
+controlDispsValsCase2         = controlDisps  ;
+loadFactorNumericalValsCase2  = numericalVals ;
+
+
+% --------------------------------------------------------
+% truss element model
+% --------------------------------------------------------
+
+problemName = 'uniaxialExtension_truss' ;
+
 Nodes = [ 0    0    0 ; ...
-          0    0   Lz ; ...
-          0   Ly   Lz ; ...
-          0   Ly    0 ; ...
-          Lx   0    0 ; ...
-          Lx   0   Lz ; ...
-          Lx  Ly   Lz ; ...
-          Lx  Ly    0 ] ;
-```
+          Lx   0    0   ...
+        ] ;
+
+Conec = {[ 0 1 0 0 1   1   ] ; ... % fixed node
+         [ 0 1 1 0 2   2   ] ; ... % loaded node
+         [ 1 2 0 1 0   1 2 ]   ... % truss element
+        } ;
+
+% ======================================================================
+% --- MELCS parameters ---
+
+materialsParams = cell(1,1) ; % M
+elementsParams  = cell(1,1) ; % E
+loadsParams     = cell(1,1) ; % L
+crossSecsParams = cell(1,1) ; % C
+springsParams   = cell(1,1) ; % S
+
+% --- Material parameters ---
+E = 1 ; nu = 0.3 ;
+materialsParams{1} = [ 0 2 E nu ] ;
+
+% --- Element parameters ---
+elementsParams = { 1  ; [ 2 0 ]} ;
+
+% --- Load parameters ---
+loadsParams{1,1} = [ 1 1  p 0 0 0 0 0 ] ;
+
+% --- CrossSection parameters ---
+crossSecsParams = { [ 2 Ly Lz] } ; %
+
+% ----------------------------------------------------------------------
+% --- springsAndSupports parameters ---
+springsParams{1, 1} = [ inf 0  inf 0   inf 0 ] ;
+springsParams{2, 1} = [ 0   0  inf 0   inf 0 ] ;
+
+% ======================================================================
+
+plotParamsVector       = [ 0 ] ;
 
 
+controlDofs = [ 2 1 1 ] ;
 
-![](solidCube.svg)
+%% run ONSAS
+ONSAS
+
+controlDispsValsCase3         = controlDisps  ;
+%~ loadFactorNumericalValsCase3  = numericalVals .* (1+controlDisps) / Lx ;
+loadFactorNumericalValsCase3  = numericalVals ;
+
+
+% ----------------------------------------------------------------------
+% --- plots ---
+lw = 2.0 ; ms = 10 ; plotfontsize = 22 ;
+
+figure, grid on, hold on
+
+plot( controlDispsValsCase1, ...
+      loadFactorAnalyticalValsCase1 ,'b-o' , 'linewidth', lw,'markersize',ms )
+
+plot( controlDispsValsCase1, ...
+      loadFactorNumericalValsCase1  ,'k-s' , 'linewidth', lw,'markersize',ms)
+
+plot( controlDispsValsCase2, ...
+      loadFactorNumericalValsCase2  ,'r-x' , 'linewidth', lw,'markersize',ms)
+
+plot( controlDispsValsCase3, ...
+      loadFactorNumericalValsCase3  ,'g--' , 'linewidth', lw,'markersize',ms)
+
+labx = xlabel('Displacement');   laby = ylabel('$\lambda$') ;
+legend('analytic Sol','numerical Sol 1','numerical Sol 2','numerical Sol 3','location','North')
+set(gca, 'linewidth', 1.2, 'fontsize', plotfontsize )
+set(labx, 'FontSize', plotfontsize); set(laby, 'FontSize', plotfontsize) ;
+%~ print( [ 'plotsExtensionSVK' ] ,'-dpdflatex','-tight') ;
+print( [ 'plotsExtensionSVK.png' ] ,'-dpng') ;
+
+% ----------------------------------------------------------------------
