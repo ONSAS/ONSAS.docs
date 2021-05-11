@@ -144,7 +144,10 @@ labx = xlabel('Displacement');   laby = ylabel('$\lambda$') ;
 legend( 'analytic', 'NR-RotEng', 'location','North')
 set(gca, 'linewidth', 1.2, 'fontsize', plotfontsize )
 set(labx, 'FontSize', plotfontsize); set(laby, 'FontSize', plotfontsize) ;
+print('vonMisesTrussCheck.png')
 ```
 
+```@raw html
+<img src="https://raw.githubusercontent.com/ONSAS/ONSAS_docs/master/docs/src/tutorials/StaticVonMisesTruss/vonMisesTrussCheck.png" alt="plot check" width="500"/>
 ```
 
