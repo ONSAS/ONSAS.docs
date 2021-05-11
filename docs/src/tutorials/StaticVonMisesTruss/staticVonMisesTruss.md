@@ -6,7 +6,7 @@ In this tutorial, the Static Von Mises Truss example and its resolutions using O
 The structural model is formed by two truss elements as it is shown in the figure, with the node $2$ submitted to a nodal load $P$ and restrained to movement in the $x-z$ plane and nodes $1$ and $3$ fixed.
 
 ```@raw html
-<img src="vonMisesTruss.svg" alt="structure diagram" width="500"/>
+<img src="./vonMisesTruss.svg" alt="structure diagram" width="500"/>
 ```
 
 The Octave script is available at [this url](https://github.com/ONSAS/ONSAS.m/blob/master/examples/staticVonMisesTruss/onsasExample_staticVonMisesTruss.m).
