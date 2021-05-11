@@ -140,3 +140,5 @@ legend('analytic','NR-RotEng','location','North')
 set(gca, 'linewidth', 1.2, 'fontsize', plotfontsize )
 set(labx, 'FontSize', plotfontsize); set(laby, 'FontSize', plotfontsize) ;
 print('verifCantileverBeam.png','-dpng')
+```
+
