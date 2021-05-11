@@ -145,4 +145,8 @@ set(labx, 'FontSize', plotfontsize); set(laby, 'FontSize', plotfontsize) ;
 print('verifCantileverBeam.png','-dpng')
 ```
 
+```@raw html
+<img src="https://raw.githubusercontent.com/ONSAS/ONSAS_docs/master/docs/src/tutorials/CantileverBeam/verifCantileverBeam.png" alt="plot check" width="500"/>
+```
+
 
