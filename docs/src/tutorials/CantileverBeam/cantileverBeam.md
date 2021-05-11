@@ -6,7 +6,7 @@ In this tutorial, the Uniform curvature cantilever example and its resolution us
 The problem consists in a beam, with one free end (right) submitted to a nodal moment $M$, and the other end (left) constrained (welded), as it is shown in the figure.
 
 ```@raw html
-<img src="https://raw.githubusercontent.com/ONSAS/ONSAS_docs/master/docs/src/tutorials/StaticVonMisesTruss/vonMisesTruss.svg" alt="structure diagram" width="500"/>
+<img src="https://raw.githubusercontent.com/ONSAS/ONSAS_docs/master/docs/src/tutorials/CantileverBeam/cantileverBeam.svg" alt="structure diagram" width="500"/>
 ```
 
 Before defining the structs, the workspace is cleaned, the ONSAS directory is added to the path and scalar geometry and material parameters are defined.
@@ -126,8 +126,11 @@ analyticLoadFactorsNREngRot = @(w) E * Iy * w / l ;
 ---
 
 ```
-verifBoolean = norm( analyticLoadFactorsNREngRot( controlDispsNREngRot) - loadFactorsNREngRot' )  < ( norm( analyticLoadFactorsNREngRot( controlDispsNREngRot) ) * 1e-4 ) 
+verifBoolean = norm( analyticLoadFactorsNREngRot( controlDispsNREngRot) ...
+                     - loadFactorsNREngRot' )  ...
+                    < ( norm( analyticLoadFactorsNREngRot( controlDispsNREngRot) ) * 1e-4 ) 
 ```
+
 
 ```
 lw = 2.0 ; ms = 11 ; plotfontsize = 22 ;
@@ -141,4 +144,5 @@ set(gca, 'linewidth', 1.2, 'fontsize', plotfontsize )
 set(labx, 'FontSize', plotfontsize); set(laby, 'FontSize', plotfontsize) ;
 print('verifCantileverBeam.png','-dpng')
 ```
+
 
