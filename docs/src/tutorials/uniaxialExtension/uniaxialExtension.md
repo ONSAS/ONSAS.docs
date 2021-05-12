@@ -1,42 +1,68 @@
 # Example uniaxialSolid
 ---
+ Elastic solid submitted to uniaxial loading. 
+ Geometry given by $Lx$, $Ly$ and $Lz$, tension $p$ applied on 
+ face $x=L_x$.
+
+The problem consists in a beam, with one free end (right) submitted to a nodal moment $M$, and the other end (left) constrained (welded), as it is shown in the figure.
+
+```@raw html
+<img src="https://raw.githubusercontent.com/ONSAS/ONSAS_docs/master/docs/src/tutorials/uniaxialExtension/diagramSolidUniaxial.svg" alt="structure diagram" width="500"/>
 ```
-% Elastic solid submitted to uniaxial loading. 
-% Geometry given by $L_x$, $L_y$ and $L_z$, tension $p$ applied on 
-% face $x=L_x$.
 
+Before defining the structs, the workspace is cleaned, the ONSAS directory is added to the path and scalar geometry and material parameters are defined.
+```
 clear all, close all
-
-%% set ONSAS.m directory
-dirOnsas = [ pwd '/../../src' ] ; addpath( dirOnsas );
-otherParams.problemName = 'uniaxialExtension_Manual' ;
-
+% add path
+addpath( [ pwd '/../../src'] );
 %% Structural properties
 E = 1 ; nu = 0.3 ;
 p = 3 ; Lx = 1 ; Ly = 1 ; Lz = 1 ;
+```
 
 
+## MEBI parameters
+------------------
+
+### materials
+
+```
 lambda = E*nu/((1+nu)*(1-2*nu)) ; mu = E/(2*(1+nu)) ;
 materials.hyperElasModel = {'SVK'} ;
 materials.hyperElasParams = { [ lambda mu ] } ;
+```
 
-
+### elements
+```
 elements.elemType = { 'triangle', 'tetrahedron' } ;
 elements.elemTypeParams = { [];[] } ;
 elements.elemTypeGeometry = { [];[] } ;
+```
 
+```
 boundaryConds.loadsCoordSys = {'global'; [] ; [] ; [] } ;
 boundaryConds.loadsTimeFact = { @(t) p*t ; [] ; [] ; []} ;
 boundaryConds.loadsBaseVals = { [1 0 0 0 0 0 ] ; [] ; [] ; [] } ;
 boundaryConds.imposDispDofs = { [] ; [1] ; [3] ; [5] } ;
 boundaryConds.imposDispVals = { [] ; [0] ; [0] ; [0] } ;
+```
 
-
+```
 initialConds = struct();
+```
 
+```
 % tension applied and x, y, z dimensions
 
-% an 8-node mesh is considered with its connectivity matrix
+```
+## Mesh
+ an 8-node mesh is considered with its connectivity matrix
+
+```@raw html
+<img src="https://raw.githubusercontent.com/ONSAS/ONSAS_docs/master/docs/src/tutorials/uniaxialExtension/solidCubeMesh.svg" alt="structure diagram" width="500"/>
+```
+
+```
 mesh.nodesCoords = [ 0    0    0 ; ...
                      0    0   Lz ; ...
                      0   Ly   Lz ; ...
@@ -78,6 +104,7 @@ analysisSettings.deltaT           = .1      ;
 
 %% Output parameters
 otherParams.plotParamsVector = [ 3 ] ;
+otherParams.problemName = 'uniaxialExtension_Manual' ;
 %~ printflag = 2 ;
 
 %~ % --- Analytic sol ---
