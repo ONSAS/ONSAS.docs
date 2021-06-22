@@ -1,10 +1,7 @@
-using Documenter, ONSAS_docs, DocumenterLaTeX
+using Documenter, ONSAS_docs
 
 DocMeta.setdocmeta!(ONSAS_docs, :DocTestSetup,
                     :(using ONSAS_docs); recursive=true)
-
-# Generate notebooks
-#include("generate.jl")
 
 # Generate bibliography
 include("bibliography.jl")
@@ -15,14 +12,11 @@ makedocs(
 
     # ---------------------------
     # case HTML output
-        format = Documenter.HTML(prettyurls = get(ENV, "CI", nothing) == "true"),
+    format = Documenter.HTML(prettyurls = get(ENV, "CI", nothing) == "true"),
 
     # ---------------------------
-
     # case PDF output
-    #authors = "Authors",
-    #format = LaTeX(platform = "none"),
-    #makedocs(format = DocumenterLaTeX.LaTeX()),
+    #format = Documenter.LaTeX(),
 
     # ---------------------------
 
