@@ -21,8 +21,9 @@ if outputFormat == "pdf"
     modules = [ONSAS_docs],
     format = Documenter.LaTeX(),
     pages = [
-      "index.md"
-      ]
+      "index.md",
+      "uniaxialExtension.md"
+    ]
   )
 
 elseif outputFormat == "html"
@@ -31,7 +32,8 @@ elseif outputFormat == "html"
     sitename = "ONSAS.m",
     format = Documenter.HTML(prettyurls = get(ENV, "CI", nothing) == "true"),
     pages = [
-      "Introduction" => "index.md"
+      "Home" => "index.md",
+      "Tutorials" => Any["Uniaxial extension" => "uniaxialExtension.md"]
     ],
     strict = false
   )
@@ -42,12 +44,9 @@ elseif outputFormat == "html"
   )
 
 end
-#
-#     pages = [
-#         "Home" => "index.md",
-#         "Tutorials" => Any["Static Von-Mises Truss" =>  "tutorials/StaticVonMisesTruss/staticVonMisesTruss.md",
-#                            "Cantilever Beam" => "tutorials/CantileverBeam/cantileverBeam.md",
-#                            "Uniaxial extension" => "tutorials/uniaxialExtension/uniaxialExtension.md"],
+#"Static Von-Mises Truss" =>  "tutorials/StaticVonMisesTruss/staticVonMisesTruss.md",
+                   #"Cantilever Beam" => "tutorials/CantileverBeam/cantileverBeam.md",
+
 #         "Guide" => Any["Installation"     => "howtouse/install.md",
 #                        "Creating Models"  => "howtouse/creatingModels.md"],
 #         "Theory" => Any["Virtual mechanical work " => "theory/prinMechWork.md",

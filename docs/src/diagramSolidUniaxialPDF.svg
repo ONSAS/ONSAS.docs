@@ -2,21 +2,20 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   xmlns:osb="http://www.openswatchbook.org/uri/2009/osb"
-   xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:cc="http://creativecommons.org/ns#"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-   xmlns:svg="http://www.w3.org/2000/svg"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="61.547161mm"
    height="51.191269mm"
    viewBox="0 0 218.08049 181.38639"
    id="svg2"
    version="1.1"
-   inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)"
-   sodipodi:docname="diagramSolidUniaxial.svg">
+   inkscape:version="1.1 (c4e8f9ed74, 2021-05-24)"
+   sodipodi:docname="diagramSolidUniaxialPDF.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
   <defs
      id="defs4">
     <marker
@@ -143,7 +142,7 @@
     </marker>
     <linearGradient
        id="linearGradient4619"
-       osb:paint="solid">
+       inkscape:swatch="solid">
       <stop
          style="stop-color:#000000;stop-opacity:1;"
          offset="0"
@@ -923,19 +922,20 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="18.079337"
-     inkscape:cx="182.94941"
-     inkscape:cy="76.702799"
+     inkscape:zoom="1.1299586"
+     inkscape:cx="26.99214"
+     inkscape:cy="69.914068"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
      showguides="false"
-     inkscape:window-width="3056"
-     inkscape:window-height="1672"
-     inkscape:window-x="144"
-     inkscape:window-y="54"
+     inkscape:window-width="1920"
+     inkscape:window-height="979"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
      inkscape:window-maximized="1"
-     inkscape:snap-intersection-paths="true" />
+     inkscape:snap-intersection-paths="true"
+     inkscape:pagecheckerboard="1" />
   <metadata
      id="metadata7">
     <rdf:RDF>
@@ -944,7 +944,6 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -1065,7 +1064,7 @@
        inkscape:connector-curvature="0" />
     <text
        xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:8.8164587px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.9375"
+       style="font-style:normal;font-weight:normal;font-size:8.81646px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.9375"
        x="255.54852"
        y="751.30688"
        id="text3383"><tspan
@@ -1073,10 +1072,10 @@
          id="tspan3381"
          x="255.54852"
          y="751.30688"
-         style="stroke-width:0.9375">Lx</tspan></text>
+         style="stroke-width:0.9375">$Lx$</tspan></text>
     <text
        xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:8.8164587px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.9375"
+       style="font-style:normal;font-weight:normal;font-size:8.81646px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.9375"
        x="419.63721"
        y="712.83636"
        id="text3383-7"><tspan
@@ -1084,7 +1083,7 @@
          id="tspan3381-5"
          x="419.63721"
          y="712.83636"
-         style="stroke-width:0.9375">p</tspan></text>
+         style="stroke-width:0.9375">$p$</tspan></text>
     <path
        style="opacity:1;vector-effect:none;fill:none;fill-opacity:1;stroke:#0000d3;stroke-width:0.80000007;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:1;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#marker2753-3)"
        d="m 342.46472,737.33679 c 18.46588,10.58963 18.46588,10.58963 18.46588,10.58963"
@@ -1112,7 +1111,7 @@
        inkscape:connector-curvature="0" />
     <text
        xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:8.8164587px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.9375"
+       style="font-style:normal;font-weight:normal;font-size:8.81646px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.9375"
        x="219.42751"
        y="714.87567"
        id="text3383-7-9"><tspan
@@ -1120,10 +1119,10 @@
          id="tspan3381-5-3"
          x="219.42751"
          y="714.87567"
-         style="stroke-width:0.9375">x</tspan></text>
+         style="stroke-width:0.9375">$x$</tspan></text>
     <text
        xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:8.8164587px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.9375"
+       style="font-style:normal;font-weight:normal;font-size:8.81646px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.9375"
        x="432.80704"
        y="751.35992"
        id="text3383-7-6"><tspan
@@ -1131,10 +1130,10 @@
          id="tspan3381-5-0"
          x="432.80704"
          y="751.35992"
-         style="stroke-width:0.9375">y</tspan></text>
+         style="stroke-width:0.9375">$y$</tspan></text>
     <text
        xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:8.8164587px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.9375"
+       style="font-style:normal;font-weight:normal;font-size:8.81646px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.9375"
        x="302.91397"
        y="602.78107"
        id="text3383-7-6-6"><tspan
@@ -1142,6 +1141,6 @@
          id="tspan3381-5-0-2"
          x="302.91397"
          y="602.78107"
-         style="stroke-width:0.9375">z</tspan></text>
+         style="stroke-width:0.9375">$z$</tspan></text>
   </g>
 </svg>

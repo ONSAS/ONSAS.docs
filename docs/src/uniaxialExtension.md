@@ -1,13 +1,18 @@
-# Example uniaxialSolid
----
+## Example uniaxialSolid
 
- In this example an elastic solid is submitted to a uniaxial extension deformation.
- The geometry and tension applied are shown in the figure where the $Lx=Ly=Lz=1$ and the tension $p$ is applied on the face $x=Lx$.
+In this example an elastic solid is submitted to a uniaxial extension deformation.
+The geometry and tension applied are shown in the figure where the $Lx=Ly=Lz=1$ and the tension $p$ is applied on the face $x=Lx$.
 
 ```@raw html
-<img src="https://raw.githubusercontent.com/ONSAS/ONSAS_docs/master/docs/src/tutorials/uniaxialExtension/diagramSolidUniaxial.svg" alt="structure diagram" width="500"/>
+<img src="diagramSolidUniaxialHTML.svg" alt="structure diagram" width="500"/>
 ```
 
+```@raw latex
+\begin{center}
+\def\svgwidth{0.7\textwidth}
+\input{diagramSolidUniaxialPDF.pdf_tex}
+\end{center}
+```
 Before defining the structs, the workspace is cleaned, the ONSAS directory is added to the path and scalar geometry and material parameters are defined.
 ```
 clear all, close all
@@ -19,10 +24,9 @@ p = 3 ; Lx = 1 ; Ly = 1 ; Lz = 1 ;
 ```
 
 
-## MEBI parameters
-------------------
+### MEBI parameters
 
-### materials
+#### materials
 
 ```
 lambda = E*nu/((1+nu)*(1-2*nu)) ; mu = E/(2*(1+nu)) ;
@@ -30,7 +34,7 @@ materials.hyperElasModel = {'SVK'} ;
 materials.hyperElasParams = { [ lambda mu ] } ;
 ```
 
-### elements
+#### elements
 ```
 elements.elemType = { 'triangle', 'tetrahedron' } ;
 elements.elemTypeParams = { [];[] } ;
