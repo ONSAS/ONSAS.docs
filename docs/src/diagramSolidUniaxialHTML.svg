@@ -920,11 +920,11 @@
      pagecolor="#ffffff"
      bordercolor="#666666"
      borderopacity="1.0"
-     inkscape:pageopacity="0.0"
+     inkscape:pageopacity="1"
      inkscape:pageshadow="2"
      inkscape:zoom="2.2599171"
-     inkscape:cx="178.98886"
-     inkscape:cy="87.171338"
+     inkscape:cx="126.33207"
+     inkscape:cy="87.171339"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -935,7 +935,7 @@
      inkscape:window-y="0"
      inkscape:window-maximized="1"
      inkscape:snap-intersection-paths="true"
-     inkscape:pagecheckerboard="1" />
+     inkscape:pagecheckerboard="false" />
   <metadata
      id="metadata7">
     <rdf:RDF>
@@ -952,6 +952,13 @@
      inkscape:groupmode="layer"
      id="layer1"
      transform="translate(-219.6815,-597.95957)">
+    <rect
+       style="fill:#ffffff;stroke:none;stroke-width:1.7185;fill-opacity:1"
+       id="rect1527"
+       width="219.19664"
+       height="182.9469"
+       x="218.83076"
+       y="597.87531" />
     <path
        style="opacity:1;vector-effect:none;fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.80000007;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:1;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#marker1687)"
        d="m 395.21397,735.76706 c 37.11619,22.16291 37.11619,22.16291 37.11619,22.16291"

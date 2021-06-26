@@ -1,10 +1,10 @@
 ## Example uniaxialSolid
 
 In this example an elastic solid is submitted to a uniaxial extension deformation.
-The geometry and tension applied are shown in the figure where the $Lx=Ly=Lz=1$ and the tension $p$ is applied on the face $x=Lx$.
+The geometry and tension applied are shown in the figure, where the $Lx=Ly=Lz=1$ and the tension $p$ is applied on the face $x=Lx$.
 
 ```@raw html
-<img src="diagramSolidUniaxialHTML.svg" alt="structure diagram" width="500"/>
+<img src="https://raw.githubusercontent.com/ONSAS/ONSAS_docs/master/docs/src/diagramSolidUniaxialHTML.svg" alt="structure diagram" width="500"/>
 ```
 
 ```@raw latex

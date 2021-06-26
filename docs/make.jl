@@ -33,7 +33,11 @@ elseif outputFormat == "html"
     format = Documenter.HTML(prettyurls = get(ENV, "CI", nothing) == "true"),
     pages = [
       "Home" => "index.md",
-      "Tutorials" => Any["Uniaxial extension" => "uniaxialExtension.md"]
+      "Learning by examples" => Any["Static Von-Mises Truss" =>  "staticVonMisesTruss.md",
+                                    "Cantilever Beam" => "cantileverBeam.md",
+                                    "Uniaxial extension" => "uniaxialExtension.md"],
+      "User guide" => Any["Installation" =>  "howtouse/install.md",
+                          "Creating Models"  => "howtouse/creatingModels.md"]
     ],
     strict = false
   )
@@ -44,11 +48,9 @@ elseif outputFormat == "html"
   )
 
 end
-#"Static Von-Mises Truss" =>  "tutorials/StaticVonMisesTruss/staticVonMisesTruss.md",
-                   #"Cantilever Beam" => "tutorials/CantileverBeam/cantileverBeam.md",
+#
 
 #         "Guide" => Any["Installation"     => "howtouse/install.md",
-#                        "Creating Models"  => "howtouse/creatingModels.md"],
 #         "Theory" => Any["Virtual mechanical work " => "theory/prinMechWork.md",
 #                         "References"               => "theory/references.md"  ],
 #         "About" => "about.md",
