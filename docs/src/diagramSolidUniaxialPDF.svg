@@ -922,9 +922,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.1299586"
-     inkscape:cx="26.99214"
-     inkscape:cy="69.914068"
+     inkscape:zoom="2.2599172"
+     inkscape:cx="75.002748"
+     inkscape:cy="97.791193"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -1119,28 +1119,28 @@
          id="tspan3381-5-3"
          x="219.42751"
          y="714.87567"
+         style="stroke-width:0.9375">$z$</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:8.81646px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.9375"
+       x="426.59418"
+       y="747.2699"
+       id="text3383-7-6"><tspan
+         sodipodi:role="line"
+         id="tspan3381-5-0"
+         x="426.59418"
+         y="747.2699"
          style="stroke-width:0.9375">$x$</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:8.81646px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.9375"
-       x="432.80704"
-       y="751.35992"
-       id="text3383-7-6"><tspan
-         sodipodi:role="line"
-         id="tspan3381-5-0"
-         x="432.80704"
-         y="751.35992"
-         style="stroke-width:0.9375">$y$</tspan></text>
-    <text
-       xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:8.81646px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.9375"
-       x="302.91397"
-       y="602.78107"
+       x="302.34518"
+       y="606.60699"
        id="text3383-7-6-6"><tspan
          sodipodi:role="line"
          id="tspan3381-5-0-2"
-         x="302.91397"
-         y="602.78107"
-         style="stroke-width:0.9375">$z$</tspan></text>
+         x="302.34518"
+         y="606.60699"
+         style="stroke-width:0.9375">$y$</tspan></text>
   </g>
 </svg>
