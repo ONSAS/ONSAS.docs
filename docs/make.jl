@@ -10,10 +10,6 @@ else
   outputFormat = ARGS[1]
 end
 
-# Generate bibliography
-#include("bibliography.jl")
-
-
 # sets different format and pages settings for each output format
 if outputFormat == "pdf"
   makedocs(
@@ -37,7 +33,8 @@ elseif outputFormat == "html"
                                     "Cantilever Beam" => "cantileverBeam.md",
                                     "Uniaxial extension" => "uniaxialExtension.md"],
       "User guide" => Any["Installation" =>  "howtouse/install.md",
-                          "Creating Models"  => "howtouse/creatingModels.md"]
+                          "Creating Models"  => "howtouse/creatingModels.md",
+                          "References"  => "theory/references.md"]
     ],
     strict = false
   )
