@@ -9,7 +9,7 @@
 T(x, t=0) = \phi(x) := \sin \pi x + \frac{1}{2}\sin 3\pi x
 ```
 
-```@eval
+```
 using Plots, LaTeXStrings
 
 ϕ(x) = sin(π*x) + sin(3π*x)/2
@@ -25,8 +25,6 @@ plot!(xdom, T0, seriestype = :scatter, lab=L"T(x=x_e, 0)")
 
 nothing
 ```
-
-![](plot_initial_temperature.svg)
 
 The analytic solution in this case is
 
@@ -62,7 +60,7 @@ ndivs     = [ nelem  ];
 hConv = []; Tamb = [];
 qInpLeft = []; qInpRight = [];
 Tdiri = 0 ;
-         
+
 [Ts, NodesCoord, times ] = HeatFEM( ...
   timeIncr, Tfinal, ...
   [rho, cSpHe, kCond], ...
@@ -99,7 +97,7 @@ Tdiri = 0 ; qInp = 0;
 diriFaces = [ Tdiri 1 2 ];
 neumFaces = [ qInp  3 4 5 6 ] ;
 robiFaces = [  ] ;
-  
+
 [Ts3D, NodesCoord, times ] = HeatFEM( ...
   timeIncr, Tfinal, ...
   [rho, cSpHe, kCond], ...
@@ -152,4 +150,3 @@ legend('FEM1D','analytic')
 
 print( [ './pngs/' problemName '.png'],'-dpng' )
 % ----------------------------------
-

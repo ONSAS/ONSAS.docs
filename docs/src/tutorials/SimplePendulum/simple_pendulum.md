@@ -3,7 +3,7 @@
 ## Model
 
 In this tutorial we study a simple pendulum. The model
-has one truss element. This model is taken from [[BAT14]](@ref).
+has one truss element. This model is taken from (Bathe,2014).
 
 |Parameter | Value|
 |-------|----|
