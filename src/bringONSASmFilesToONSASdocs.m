@@ -1,7 +1,5 @@
-
 % call jorge from console:
 %   octave --eval "bringONSASmFilesToONSASdocs('~/work/codigos/onsas/ONSAS.m_repo/')"
-
 
 function bringONSASmFilesToONSASdocs( dirONSASm )
 
