@@ -34,7 +34,8 @@ elseif outputFormat == "html"
                                     "Uniaxial extension" => "uniaxialExtension.md"],
       "User guide" => Any["Installation" =>  "howtouse/install.md",
                           "Creating Models"  => "howtouse/creatingModels.md",
-                          "References"  => "theory/references.md"]
+                          "References"  => "theory/references.md"],
+      "Developer guide" => Any["ONSAS_solve" =>  "ONSAS_solve.md"]
     ],
     strict = false
   )

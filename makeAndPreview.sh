@@ -1,5 +1,9 @@
 #!/bin/bash
 
+cd src
+octave --eval "bringONSASmFilesToONSASdocs('~/work/codigos/ONSAS.m_repo/')"
+cd ..
+
 # make documention
 julia docs/make.jl $1
 

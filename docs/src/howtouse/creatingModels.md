@@ -43,15 +43,37 @@ where $n_P$ is the number of parameters of the constitutive model and $\mathbf{p
 The elements struct contains the information about the type of finite elements used and their corresponding parameters.
 
 ### `elements.elemType`
-cell structure with the string-names of the elements used: `node`, `truss`, `frame`, `triangle` or `tetrahedron`.
+cell structure with the string-names of the elements used: `node`, `truss`, `frame`, `triangle` or `tetrahedron`. Other auxiliar types such as `edge` are also available
+
+### `elements.elemTypeParams`
+cell structure with auxiliar params information, required for some element types:
+
+ * `triangle` vector with parameters, the first parameter is an integer indicating if plane stress (1) or plane strain (2) case is considered.
 
 ### `elements.elemTypeGeometry`
 
-cell structure with the information of the geometry of the element. For `truss` or `frame` elements a vector with the cross-section properties is required:
+cell structure with the information of the geometry of the element.
+
+#### 1D elements
+
+For `truss` or `frame` elements a vector with the cross-section properties is required:
 ```math
 [ crossSectionType, \,\, crossSectionParam_{1}, \,\,\dots,\,\, crossSectionParam_{n}]
 ```
-with $n$ being the number of parameters of the cross section type, and crossSectionType taking values: 1 (for general sections with given area and interias), 2 (for rectangular sections with given with thicknesses ``t_y`` and ``t_z``) and 3 (for circular sections with given diameter). See the `crossSectionProps.m` function for more details.
+with $n$ being the number of parameters of the cross section type, and `crossSectionType` a paramter setting the type of cross section. As follow:
+
+1. general sections areas and inertias are provided
+1. rectangular sections: thicknesses ``t_y`` and ``t_z`` are provided
+1. circular sections: diameter is provided.
+
+See the `crossSectionProps.m` function for more details.
+
+For `edge` elements the thickness is expected (for 2D load computations).
+
+#### 2D elements
+
+For 2D elements such as `triangle` the thickness is expected to be introduced. The elementtype  
+
 
 ## The `boundaryConds` struct
 
@@ -62,11 +84,11 @@ cell containing the coordinates system for the loads applied in each BC, each en
 cell with the inline function definitions of load factors of the loads applied of an empty array.
 
 ### `boundaryConds.loadsBaseVals`
-cell with the vector of the components of the load case
+cell with the (row) vector of the components of the load case
 ```math
 [ f_x,  \, m_x, \, f_y, \, m_y, \, f_z, \, m_z ]
 ```
-where $f_i$ are the components of forces and $m_i$ are the moments. Both forces or moments are considered per unit of length in the case of `truss`/`frame` elements, or per unit of area in the case of `triangle`.
+where $f_i$ are the components of forces and $m_i$ are the moments. Both forces or moments are considered per unit of length in the case of `truss`/`frame`/`edge` elements, or per unit of area in the case of `triangle`.
 
 ### `boundaryConds.userLoadsFileName`
 cell with filenames of `.m` function file provided by the user that can be used to apply other forces.
