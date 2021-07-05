@@ -1,7 +1,8 @@
-% call jorge from console:
-%   octave --eval "bringONSASmFilesToONSASdocs('~/work/codigos/onsas/ONSAS.m_repo/')"
 
 function bringONSASmFilesToONSASdocs( dirONSASm )
+
+% call jorge from console:
+% octave --eval "bringONSASmFilesToONSASdocs('~/work/codigos/onsas/ONSAS.m_repo/')"
 
 dirONSAS_docs = '../docs/src/' ;
 
@@ -31,5 +32,3 @@ for i=1:length( ONSASmFiles )
   fprintf([ '  - ' ONSASmFiles{i} '\n' ])
   m2md( [ dirONSASm ONSASmFiles{i} ] , [ dirONSAS_docs MDFiles{i} ] , 1, iniLines{i} ) ;
 end
-
-end 
