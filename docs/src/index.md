@@ -38,6 +38,14 @@ The current version allows to perform dynamic/static nonlinear analyses of beam/
 
 [tower](https://github.com/ONSAS/ONSAS_docs/blob/master/gifs/tower.gif?raw=true)
 
+#### A uniaxial extension test
+
+```@raw html
+<img src="https://github.com/ONSAS/ONSAS_docs/blob/master/gifs/uniaxial.gif?raw=true" alt="uniaxial animation">
+```
+[uniaxial animation](https://github.com/ONSAS/ONSAS_docs/blob/master/gifs/uniaxial.gif?raw=true)
+
+
 #### A chain model
 
 ```@raw html
