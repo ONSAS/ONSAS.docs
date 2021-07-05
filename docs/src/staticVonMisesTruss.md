@@ -104,7 +104,6 @@ analysisSettings.finalTime     =   1 ;
 ------------------
 ```
 otherParams.problemName = 'staticVonMisesTruss_NR';
-otherParams.plotParamsVector = [3];
 otherParams.controlDofs = [2 5 ];
 ```
 

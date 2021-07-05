@@ -1,7 +1,7 @@
 #!/bin/bash
 
 cd src
-octave --eval "bringONSASmFilesToONSASdocs('~/work/codigos/ONSAS.m_repo/')"
+octave --eval "bringONSASmFilesToONSASdocs('~/work/codigos/onsas/ONSAS.m_repo/')"
 cd ..
 
 # make documention

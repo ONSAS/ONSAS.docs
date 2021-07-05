@@ -1,3 +1,5 @@
+push!(LOAD_PATH, "src")
+
 using Documenter, ONSAS_docs
 
 DocMeta.setdocmeta!(ONSAS_docs, :DocTestSetup,

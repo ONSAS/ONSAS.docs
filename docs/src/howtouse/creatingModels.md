@@ -148,6 +148,6 @@ another additional optional parameters are:
 ## The `otherParams` struct
 
   * `problemName`: string with the name of the problem, to be used in outputs.
-  * `plotParamsVector`: 3 for vtk output
+  * `plotsFormat`: strint indicating the format of the output. Use __'vtk'__ for vtk output.
   * `controlDofs`: matrix with information of the degrees of freedom to compute and control. Each row should contain this form: `[ node localdof ]`.
   * `storeBoolean`: boolean to store the results of the current iteration such as the displacements, tangent matrices, normal forces and stresses. [default: 1]

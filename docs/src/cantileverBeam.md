@@ -105,7 +105,6 @@ analysisSettings.stopTolIts    =   10   ;
 ## otherParams
 ```
 otherParams.problemName = 'uniformCurvatureCantilever';
-otherParams.plotParamsVector = [ 3 ] ;
 otherParams.controlDofs = [ numElements+1  4 ] ;
 ```
 ## Analysis case 1: NR with Rotated Eng Strain
