@@ -1,5 +1,6 @@
+% function used to conver .m files in ONSAS repo to md files in this repo
 
-function bringONSASmFilesToONSASdocs( dirONSASm )
+function bringONSASmFilesToONSAS_docs( dirONSASm )
 
 % call jorge from console:
 % octave --eval "bringONSASmFilesToONSASdocs('~/work/codigos/onsas/ONSAS.m_repo/')"
