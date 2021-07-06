@@ -141,7 +141,7 @@ This struct contains the parameters required to apply the numerical method for t
  * `finalTime`: final time of simulation
  * `incremArcLen`: with of cylinder for arcLength method
  * `deltaNM`: delta parameter of newmark method
- * `alphaNM`: alpha paramter of newmark method
+ * `alphaNM`: alpha parameter of newmark method
  * `alphaHHT`: alpha parameter of alpha-HHT method
 
 another additional optional parameters are:
