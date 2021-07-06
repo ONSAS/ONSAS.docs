@@ -37,6 +37,10 @@ A cell structure with vectors with the material properties of each material used
 ```
 where $n_P$ is the number of parameters of the constitutive model and $\mathbf{p}$ is the vector of constitutive parameters.
 
+### `material.density`
+
+This is a cell with the scalar values of the densities of the materials used in the model.
+
 
 ## The `elements` struct
 
