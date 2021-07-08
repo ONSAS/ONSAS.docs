@@ -45,14 +45,25 @@ The current version allows to perform dynamic/static nonlinear analyses of beam/
 ```
 [uniaxial animation](https://github.com/ONSAS/ONSAS_docs/blob/master/gifs/uniaxial.gif?raw=true)
 
+#### A beam/truss pendulum
+
+```@raw html
+<img src="https://raw.githubusercontent.com/mvanzulli/Tex_CorrotationalDynamicTL_TesisMV/main/Presentacion/Videos/3.gif" alt="beam truss pendulum">
+```
 
 #### A chain model
 
 ```@raw html
 <img src="https://user-images.githubusercontent.com/42485529/90902313-a6bf8d80-e3a2-11ea-8369-a9be639552f9.gif?raw=true" alt="chain animation">
 ```
-
 [chain](https://user-images.githubusercontent.com/42485529/90902313-a6bf8d80-e3a2-11ea-8369-a9be639552f9.gif?raw=true)
+
+
+#### A transmission line tower model
+
+```@raw html
+<img src="https://raw.githubusercontent.com/mvanzulli/Tex_CorrotationalDynamicTL_TesisMV/main/Presentacion/Videos/4.gif" alt="transmission line">
+```
 
 ## Contributors and License
 
