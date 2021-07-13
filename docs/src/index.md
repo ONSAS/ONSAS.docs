@@ -70,6 +70,7 @@ The current version allows to perform dynamic/static nonlinear analyses of beam/
 The code is distributed under a [GNU-GPL 3.0 license](https://www.gnu.org/licenses/gpl-3.0.html).
 
 
+
 ### Authors
 
 The following authors collaborated in various tasks including: design, development and testing of the code.
