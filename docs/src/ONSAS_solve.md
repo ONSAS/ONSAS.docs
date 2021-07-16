@@ -38,7 +38,7 @@ while finalTimeReachedBoolean == false
   if strcmp( modelProperties.plotsFormat, 'vtk' )
     vtkMainWriter( modelCurrSol, modelProperties )
   end % if vtk output format
-  
+
 end %while time
 ```
 

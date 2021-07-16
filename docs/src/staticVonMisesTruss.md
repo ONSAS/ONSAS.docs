@@ -143,7 +143,7 @@ labx = xlabel('Displacement');   laby = ylabel('$\lambda$') ;
 legend( 'analytic', 'NR-RotEng', 'location','North')
 set(gca, 'linewidth', 1.2, 'fontsize', plotfontsize )
 set(labx, 'FontSize', plotfontsize); set(laby, 'FontSize', plotfontsize) ;
-print('vonMisesTrussCheck.png','-dpng')
+print('output/vonMisesTrussCheck.png','-dpng')
 ```
 
 ```@raw html

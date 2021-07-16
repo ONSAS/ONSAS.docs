@@ -1,7 +1,12 @@
 #!/bin/bash
 
+if [ -z "$ONSAS_PATH" ]; then
+    echo "Need to set ONSAS_PATH"
+    exit 1
+fi
+
 cd src
-octave --eval "bringONSASmFilesToONSAS_docs('~/work/codigos/onsas/ONSAS.m_repo/')"
+octave --eval "bringONSASmFilesToONSASdocs('$ONSAS_PATH')"
 cd ..
 
 # make documention
