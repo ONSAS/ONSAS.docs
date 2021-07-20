@@ -4,8 +4,17 @@
 In this tutorial, the Static Von Mises Truss example and its resolution using ONSAS are described. The aim of this example is to validate the Newton-Raphson method implementation by comparing the results provided by ONSAS with analytic solutions. The structural model is formed by two truss elements with length $L$ as it is shown in the figure, with the node $2$ submitted to a nodal load $P$ and restrained to move in the $x-z$ plane and nodes $1$ and $3$ fixed.
 
 ```@raw html
+<img src="vonMisesTruss.svg" alt="structure diagram" width="500"/>
+```
+
+```@raw html
 <img src="./vonMisesTruss.svg" alt="structure diagram" width="500"/>
 ```
+
+```@raw html
+<img src="docs/build/vonMisesTruss.svg" alt="structure diagram" width="500"/>
+```
+
 ## Analytic solution
 
 The solutions are developed in [section 2.3 of (Bazzano and Pérez Zerpa, 2017)](https://www.colibri.udelar.edu.uy/jspui/bitstream/20.500.12008/22106/1/Bazzano_P%c3%a9rezZerpa_Introducci%c3%b3n_al_An%c3%a1lisis_No_Lineal_de_Estructuras_2017.pdf#section.2.3). The expressions obtained for different straing measures are:
