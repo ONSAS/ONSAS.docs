@@ -43,7 +43,7 @@ elseif outputFormat == "html"
   )
 
   deploydocs(
-      repo = "github.com/ONSAS/ONSAS_docs.git",
+      repo = "github.com/ONSAS/ONSAS.docs.git",
       push_preview=true
   )
 
