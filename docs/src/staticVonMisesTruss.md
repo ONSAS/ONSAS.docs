@@ -1,13 +1,24 @@
 # Static Von Mises Truss example
 ---
 
-In this tutorial, the Static Von Mises Truss example and its resolutions using ONSAS are described. The aim of this example is to validate the Newton-Raphson method implementation by comparing the results provided by ONSAS with the analytical solution. The Octave script of this example is available at [this url](https://github.com/ONSAS/ONSAS.m/blob/master/examples/staticVonMisesTruss/onsasExample_staticVonMisesTruss.m).
-
-The structural model is formed by two truss elements with length $L$ as it is shown in the figure, with the node $2$ submitted to a nodal load $P$ and restrained to move in the $x-z$ plane and nodes $1$ and $3$ fixed.
+In this tutorial, the Static Von Mises Truss example and its resolution using ONSAS are described. The aim of this example is to validate the Newton-Raphson method implementation by comparing the results provided by ONSAS with analytic solutions. The structural model is formed by two truss elements with length $L$ as it is shown in the figure, with the node $2$ submitted to a nodal load $P$ and restrained to move in the $x-z$ plane and nodes $1$ and $3$ fixed.
 
 ```@raw html
-<img src="https://raw.githubusercontent.com/ONSAS/ONSAS_docs/master/docs/src/tutorials/StaticVonMisesTruss/vonMisesTruss.svg" alt="structure diagram" width="500"/>
+<img src="./vonMisesTruss.svg" alt="structure diagram" width="500"/>
 ```
+## Analytic solution
+
+The solutions are developed in [section 2.3 of (Bazzano and Pérez Zerpa, 2017)](https://www.colibri.udelar.edu.uy/jspui/bitstream/20.500.12008/22106/1/Bazzano_P%c3%a9rezZerpa_Introducci%c3%b3n_al_An%c3%a1lisis_No_Lineal_de_Estructuras_2017.pdf#section.2.3). The expressions obtained for different straing measures are:
+ * Rotated-Engineering: $P = \frac{EA_o(z+w)\left(\sqrt{(w+z)^2+x^2}-l_o\right)}{l_o\sqrt{(w+z)^2+x^2}}$
+```
+analyticLoadFactorsNREngRot = @(w) -2 * E*A* ...
+     ( (  (auxz+(-w)).^2 + auxx^2 - L^2 ) ./ (L * ( L + sqrt((auxz+(-w)).^2 + auxx^2) )) ) ...
+  .* (auxz+(-w)) ./ ( sqrt((auxz+(-w)).^2 + auxx^2) )  ;
+
+```
+## Numerical solution
+
+The Octave script of this example is available at [this url](https://github.com/ONSAS/ONSAS.m/blob/master/examples/staticVonMisesTruss/onsasExample_staticVonMisesTruss.m).
 
 Before defining the structs, the workspace is cleaned, the ONSAS directory is added to the path and scalar auxiliar parameters are defined.
 ```
@@ -18,12 +29,12 @@ E = 210e9 ;  A = 2.5e-3 ; ang1 = 65 ; L = 2 ; nu = 0 ;
 auxx = cos( ang1*pi/180 ) * L ;  auxz = sin( ang1*pi/180 ) * L ;
 ```
 
-## MEBI parameters
+### MEBI parameters
 ------------------
 
 The modelling of the structure begins with the definition of the Material-Element-BoundaryConditions-InitialConditions (MEBI) parameters.
 
-### materials
+#### materials
  Since both bars are formed by the same material all the fields of the `materials` struct will have only one entry. contains only one vector. The constitutive behavior is the SaintVenantKirchhoff:
 ```
 materials.hyperElasModel  = { '1DrotEngStrain'} ;
@@ -31,7 +42,7 @@ materials.hyperElasParams = { [ E nu ] } ;
 ```
  and the parameters of this model are the Young modulus and Poisson ratio.
 
-### elements
+#### elements
 
 Two different types of elements are considered, node and truss. The nodes will be assigned in the first entry (index $1$) and the truss at the index $2$. The elemType field is then:
 ```
@@ -43,7 +54,7 @@ elements.elemTypeGeometry = { [], [2 sqrt(A) sqrt(A) ] };
 elements.elemTypeParams = { [], 1 };
 ```
 
-### boundaryConds
+#### boundaryConds
 
  The elements are submitted to two different BC settings. The nodes $1$ and $3$ are fixed without applied loads (first BC), and node $2$ has a constraint in displacement and an applied load (second BC). The load factor function of the second BC is set so that the target load 1.5e8 is reached at 1 second. The density is set to zero, then no inertial effects are considered.
 
@@ -55,13 +66,13 @@ boundaryConds.imposDispDofs = { [ 1 3 5 ] ; 3          } ;
 boundaryConds.imposDispVals = { [ 0 0 0 ] ; 0          } ;
 ```
 
-### initial Conditions
+#### initial Conditions
  homogeneous initial conditions are considered, then an empty struct is set:
 ```
 initialConds                = struct() ;
 ```
 
-## mesh parameters
+### mesh parameters
 ------------------
 The coordinates of the nodes of the mesh are given by the matrix:
 ```
@@ -88,7 +99,7 @@ mesh.conecCell{ 4, 1 } = [ 1 2 0 0  1 2 ] ;
 mesh.conecCell{ 5, 1 } = [ 1 2 0 0  2 3 ] ;
 ```
 
-## analysisSettings
+### analysisSettings
 ------------------
 ```
 analysisSettings.methodName    = 'newtonRaphson' ;
@@ -100,14 +111,14 @@ analysisSettings.stopTolIts    =   10 ;
 analysisSettings.finalTime     =   1 ;
 ```
 
-## otherParams
+### otherParams
 ------------------
 ```
 otherParams.problemName = 'staticVonMisesTruss_NR';
 otherParams.controlDofs = [2 5 ];
 ```
 
-## Analysis case 1: NR with Rotated Eng Strain
+### Analysis case 1: NR with Rotated Eng Strain
 ------------------
  In the first case ONSAS is run and the solution at the dof of interest is stored .
 ```
@@ -123,7 +134,7 @@ analyticLoadFactorsNREngRot = @(w) -2 * E*A* ...
 ```
 
 
-## Results verification
+### Results verification
 ------------------
 
 ### numerical verification
@@ -149,4 +160,3 @@ print('output/vonMisesTrussCheck.png','-dpng')
 ```@raw html
 <img src="https://raw.githubusercontent.com/ONSAS/ONSAS_docs/master/docs/src/tutorials/StaticVonMisesTruss/vonMisesTrussCheck.png" alt="plot check" width="500"/>
 ```
-
