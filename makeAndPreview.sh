@@ -9,6 +9,8 @@ cd src
 octave --eval "bringONSASmFilesToONSASdocs('$ONSAS_PATH')"
 cd ..
 
+cp "$ONSAS_PATH/examples/staticVonMisesTruss/output/vonMisesTrussCheck.png" docs/src/
+
 # make documention
 julia docs/make.jl $1
 
