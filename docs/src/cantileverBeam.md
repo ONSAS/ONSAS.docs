@@ -1,4 +1,4 @@
-# Uniform curvature cantilever beam
+# Uniform curvature cantilever beam example
 ---
 
 In this tutorial, the Uniform curvature cantilever example and its resolution using ONSAS are described. The aim of this example is to validate the static co-rotational 3D beam implementation by comparing the results provided by ONSAS with the analytical solution.  The Octave script of this example is available at [this url](https://github.com/ONSAS/ONSAS.m/blob/master/examples/uniformCurvatureCantilever/onsasExample_uniformCurvatureCantilever.m).
@@ -6,7 +6,7 @@ In this tutorial, the Uniform curvature cantilever example and its resolution us
 The problem consists in a beam, with one free end (right) submitted to a nodal moment $M$, and the other end (left) constrained (welded), as it is shown in the figure.
 
 ```@raw html
-<img src="https://raw.githubusercontent.com/ONSAS/ONSAS_docs/master/docs/src/tutorials/CantileverBeam/cantileverBeam.svg" alt="structure diagram" width="500"/>
+<img src="https://raw.githubusercontent.com/ONSAS/ONSAS_docs/master/docs/src/cantileverBeam_HTML.svg" alt="structure diagram" width="500"/>
 ```
 
 Before defining the structs, the workspace is cleaned, the ONSAS directory is added to the path and scalar geometry and material parameters are defined.
@@ -22,13 +22,16 @@ l = 10 ; ty = .1 ;  tz = .1 ;
 numElements = 10 ;
 ```
 
-## MEBI parameters
-------------------
+##Analytic solution
+ The rotation of the right end, for a given moment $M$, can be computed as:
+```math
+ M( \theta ) = E I_y \frac{ \theta}{ l }  ;
+```
+##Numerical solution
+### MEBI parameters
 
 The modelling of the structure begins with the definition of the Material-Element-BoundaryConditions-InitialConditions (MEBI) parameters.
-```
 
-```
 ### materials
  Since the example contains only one rod the fields of the `materials` struct will have only one entry. Although, it is considered constitutive behavior according to the SaintVenantKirchhoff law:
 ```
@@ -48,7 +51,8 @@ elements.elemType = { 'node','frame' } ;
 elements.elemTypeGeometry = { [], [2 ty tz ] };
 elements.elemTypeParams = { [], 1 };
 ```
-## boundaryConds
+
+### boundaryConds
 
  The elements are submitted to two different BC settings. The first BC corresponds to a welded condition (all 6 dofs set to zero), and the second corresponds to an incremental nodal moment, where the target load produces a circular form of the deformed beam.
  The scalar values of inertia $I_z$ is computed.
@@ -62,13 +66,13 @@ boundaryConds.imposDispVals = { [ 0 0 0 0 0 0 ] ; []         } ;
 ```
 
 
-## initial Conditions
+### initial Conditions
  homogeneous initial conditions are considered, then an empty struct is set:
 ```
 initialConds                = struct() ;
 ```
 
-## mesh parameters
+### mesh parameters
 The coordinates of the nodes of the mesh are given by the matrix:
 ```
 mesh.nodesCoords = [ (0:(numElements))'*l/numElements  zeros(numElements+1,2) ] ;
@@ -92,7 +96,7 @@ for i=1:numElements,
 end
 ```
 
-## analysisSettings
+### analysisSettings
 ```
 analysisSettings.methodName    = 'newtonRaphson' ;
 analysisSettings.deltaT        =   0.1  ;
@@ -122,10 +126,9 @@ loadFactorsNREngRot  =  loadFactorsMat(:,2) ;
  and the analytical value of the load factors is computed
 ```
 analyticLoadFactorsNREngRot = @(w) E * Iy * w / l ;
-
 ```
-## Results verification
----
+
+## Verification
 
 ```
 verifBoolean = norm( analyticLoadFactorsNREngRot( controlDispsNREngRot) ...
@@ -148,9 +151,11 @@ print('output/verifCantileverBeam.png','-dpng')
 ```
 
 ```@raw html
-<img src="https://raw.githubusercontent.com/ONSAS/ONSAS_docs/master/docs/src/tutorials/CantileverBeam/verifCantileverBeam.png" alt="plot check" width="500"/>
+<img src="https://raw.githubusercontent.com/ONSAS/ONSAS_docs/master/docs/src/verifCantileverBeam.png" alt="plot check" width="500"/>
 ```
 
 
 ```
 verifBoolean = norm( analyticLoadFactorsNREngRot( controlDispsNREngRot) - loadFactorsNREngRot' )  < ( norm( analyticLoadFactorsNREngRot( controlDispsNREngRot) ) * 1e-4 )
+```
+
