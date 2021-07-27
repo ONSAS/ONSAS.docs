@@ -922,9 +922,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="1"
      inkscape:pageshadow="2"
-     inkscape:zoom="2.2599171"
-     inkscape:cx="126.33207"
-     inkscape:cy="87.171339"
+     inkscape:zoom="3.1960054"
+     inkscape:cx="102.15878"
+     inkscape:cy="78.535537"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -1149,5 +1149,27 @@
          x="304.80344"
          y="607.00397"
          style="stroke-width:0.9375">y</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:8.81646px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.9375"
+       x="217.54393"
+       y="683.229"
+       id="text3383-3"><tspan
+         sodipodi:role="line"
+         id="tspan3381-6"
+         x="217.54393"
+         y="683.229"
+         style="stroke-width:0.9375">Ly</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:8.81646px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.9375"
+       x="254.1786"
+       y="616.48425"
+       id="text3383-3-7"><tspan
+         sodipodi:role="line"
+         id="tspan3381-6-5"
+         x="254.1786"
+         y="616.48425"
+         style="stroke-width:0.9375">Lz</tspan></text>
   </g>
 </svg>
