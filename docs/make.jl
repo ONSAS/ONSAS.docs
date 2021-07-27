@@ -32,12 +32,12 @@ elseif outputFormat == "html"
     pages = [
       "Home" => "index.md",
       "Learning by examples" => Any["Static Von-Mises Truss" =>  "staticVonMisesTruss.md",
-                                    "Cantilever Beam" => "cantileverBeam.md",
-                                    "Uniaxial extension" => "uniaxialExtension.md"],
+                                    "Uniaxial extension" => "uniaxialExtension.md",
+                                    "Cantilever Beam" => "cantileverBeam.md"],
       "User guide" => Any["Installation" =>  "howtouse/install.md",
                           "Creating Models"  => "howtouse/creatingModels.md",
-                          "References"  => "theory/references.md"],
-      "Developer guide" => Any["ONSAS_solve" =>  "ONSAS_solve.md"]
+                          "References"  => "theory/references.md"]
+      #"Developer guide" => Any["ONSAS_solve" =>  "ONSAS_solve.md"]
     ],
     strict = false
   )
