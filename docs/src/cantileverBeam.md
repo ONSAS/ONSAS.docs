@@ -13,7 +13,7 @@ Before defining the structs, the workspace is cleaned, the ONSAS directory is ad
 ```
 close all, clear all ;
 % add path
-addpath( [ pwd '/../../src'] );
+addpath( genpath( [ pwd '/../../src'] ) );
 % material scalar parameters
 E = 200e9 ;  nu = 0.3 ;
 % geometrical scalar parameters
@@ -35,8 +35,8 @@ The modelling of the structure begins with the definition of the Material-Elemen
 ### materials
  Since the example contains only one rod the fields of the `materials` struct will have only one entry. Although, it is considered constitutive behavior according to the SaintVenantKirchhoff law:
 ```
-materials.hyperElasModel  = { '1DrotEngStrain'} ;
-materials.hyperElasParams = { [ E nu ] } ;
+materials.hyperElasModel  = '1DrotEngStrain' ;
+materials.hyperElasParams = [ E nu ] ;
 ```
  The density is not defined, therefore it is considered as zero (default), then no inertial effects are considered (static analysis).
 
@@ -44,25 +44,28 @@ materials.hyperElasParams = { [ E nu ] } ;
 
 Two different types of elements are considered, node and beam. The nodes will be assigned in the first entry (index $1$) and the beam at the index $2$. The elemType field is then:
 ```
-elements.elemType = { 'node','frame' } ;
+elements(1).elemType = 'node'  ;
+elements(2).elemType = 'frame' ;
 ```
  for the geometries, the node has not geometry to assign (empty array), and the truss elements will be set as a rectangular-cross section with $t_y$ and $t_z$ cross-section dimensions in $y$ and $z$ directions, then the elemTypeGeometry field is:
 ```
-elements.elemTypeGeometry = { [], [2 ty tz ] };
-elements.elemTypeParams = { [], 1 };
+elements(2).elemTypeGeometry = [2 ty tz ] ;
+elements(2).elemTypeParams   = 1          ;
 ```
 
 ### boundaryConds
 
- The elements are submitted to two different BC settings. The first BC corresponds to a welded condition (all 6 dofs set to zero), and the second corresponds to an incremental nodal moment, where the target load produces a circular form of the deformed beam.
- The scalar values of inertia $I_z$ is computed.
+ The elements are submitted to two different BC settings. The first BC corresponds to a welded condition (all 6 dofs set to zero)
 ```
 Iy = ty*tz^3/12 ;
-boundaryConds.loadsCoordSys = { []        ; 'global'   } ;
-boundaryConds.loadsTimeFact = { []        ; @(t) E*Iy*2*pi/l *t } ;
-boundaryConds.loadsBaseVals = { []        ; [ 0 0 0 -1 0 0 ] } ;
-boundaryConds.imposDispDofs = { [ 1 2 3 4 5 6 ] ; []         } ;
-boundaryConds.imposDispVals = { [ 0 0 0 0 0 0 ] ; []         } ;
+boundaryConds(1).imposDispDofs = [ 1 2 3 4 5 6 ] ;
+boundaryConds(1).imposDispVals = [ 0 0 0 0 0 0 ] ;
+```
+and the second corresponds to an incremental nodal moment, where the target load produces a circular form of the deformed beam.
+```
+boundaryConds(2).loadsCoordSys = 'global'        ;
+boundaryConds(2).loadsTimeFact = @(t) E*Iy*2*pi/l *t ;
+boundaryConds(2).loadsBaseVals = [ 0 0 0 -1 0 0 ] ;
 ```
 
 

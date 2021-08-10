@@ -143,6 +143,7 @@ This struct contains the parameters required to apply the numerical method for t
  * `deltaNM`: delta parameter of newmark method
  * `alphaNM`: alpha parameter of newmark method
  * `alphaHHT`: alpha parameter of alpha-HHT method
+ * `solverLang`: parameter setting the programming language of the solver: `Octave` (default) or `C++` (binaries required).
 
 another additional optional parameters are:
 
