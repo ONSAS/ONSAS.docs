@@ -34,44 +34,54 @@ z2 = sin( ang1*pi/180 ) * L ;
 The modelling of the structure begins with the definition of the Material-Element-BoundaryConditions-InitialConditions (MEBI) parameters.
 
 #### materials
- Since both bars are formed by the same material all the fields of the `materials` struct have only one entry. The constitutive behavior considered in the first analysis case is the Rotated Engineering strain, then the field `hyperElasModel` is set
+ Since both bars are formed by the same material only one `materials` struct is defined. The constitutive behavior considered in the first analysis case is the Rotated Engineering strain, then the field `hyperElasModel` is set to:
 ```
-materials.hyperElasModel  = { '1DrotEngStrain'} ;
+materials.hyperElasModel  = '1DrotEngStrain' ;
 ```
  and in the field `hyperElasParams` a vector with the parameters of the Engineering Strain model is set
 ```
-materials.hyperElasParams = { [ E nu ] } ;
+materials.hyperElasParams = [ E nu ] ;
 ```
  which in the case of this model are the Young modulus and the Poisson ratio.
  The field `density` is not set, then the default $\rho = 0$ value is considered by ONSAS.
 
 #### elements
 
-Two different types of elements are required to create the model: `node` and `truss`. The node type is set in the first entry of the cell (index $1$) and the truss at index $2$. The `elemType` field is then:
+Two different types of elements are required to create the model: `node` and `truss`, thus, the `elements` struct will have two entries. The type of the first entry is
 ```
-elements.elemType = { 'node', 'truss' } ;
+elements(1).elemType = 'node';
 ```
- for the geometries, the node has no geometry to assign (empty array), and the truss elements will be set as a square-cross section, then the elemTypeGeometry field is:
+ and the second entry is
 ```
-elements.elemTypeGeometry = { [], [2 sqrt(A) sqrt(A) ] };
-elements.elemTypeParams = { [], 1 };
+elements(2).elemType = 'truss';
+```
+ for the geometries, the node has no geometry to assign, and the truss elements will be set as a square-cross section, then the elemTypeGeometry field is:
+```
+elements(2).elemTypeGeometry = [2 sqrt(A) sqrt(A) ] ;
+elements(2).elemTypeParams = 1 ;
 ```
 
 #### boundaryConds
 
- The elements are submitted to two different BoundaryConditions, then the fields of the `boundaryConds` struct have length two.
+ The elements are submitted to two different BoundaryConditions, then the struct `boundaryConds` will have length two.
  The nodes $1$ and $3$ are fixed, without loads applied (this is the first BC), and node $2$ has a constraint in displacement and an applied load (second BC).
- We start introducing the load fields. The load factor function of the second BC is set so that the final load factor is $3 \cdot 10^8$ at 1 second. The default zero density is used, then no inertial effects are considered.
+ For the displacements, the first BC corresponds with the all displacement degrees of freedom set to zero,
 
 ```
-boundaryConds.loadsCoordSys = { []        ; 'global'   } ;
-boundaryConds.loadsTimeFact = { []        ; @(t) 3.0e8*t     } ;
-boundaryConds.loadsBaseVals = { []        ; [ 0 0 0 0 -1 0 ] } ;
+boundaryConds(1).imposDispDofs = [ 1 3 5 ] ;
+boundaryConds(1).imposDispVals = [ 0 0 0 ] ;
 ```
- regarding the displacements, the first BC is associated with the displacement degrees of freedom set to zero and the second BC corresponds to a zero displacement in the $y$ direction.
+and the second BC corresponds to a zero displacement only in the $y$ direction.
 ```
-boundaryConds.imposDispDofs = { [ 1 3 5 ] ; 3          } ;
-boundaryConds.imposDispVals = { [ 0 0 0 ] ; 0          } ;
+boundaryConds(2).imposDispDofs =  3 ;
+boundaryConds(2).imposDispVals =  0 ;
+```
+ Regarding the loads, the second BC is set so that the final load factor is $3 \cdot 10^8$ at 1 second. The default zero density is used, then no inertial effects are considered.
+
+```
+boundaryConds(2).loadsCoordSys = 'global'         ;
+boundaryConds(2).loadsTimeFact = @(t) 3.0e8*t     ;
+boundaryConds(2).loadsBaseVals = [ 0 0 0 0 -1 0 ] ;
 ```
 
 #### initial Conditions
@@ -153,13 +163,13 @@ difLoadEngRot = analyticLoadFactorsNREngRot( controlDispsNREngRot)' - loadFactor
  In order to perform a SVK case, the material is changed and the problemName is also updated
 ```
 otherParams.problemName = 'staticVonMisesTruss_NR_Green';
-materials.hyperElasModel  = { 'SVK'} ;
+materials.hyperElasModel  = 'SVK' ;
 lambda = E*nu/((1+nu)*(1-2*nu)) ; mu = E/(2*(1+nu)) ;
-materials.hyperElasParams = { [ lambda mu ] } ;
+materials.hyperElasParams = [ lambda mu ] ;
 ```
  the load history is also changed
 ```
-boundaryConds.loadsTimeFact = { []        ; @(t) 1.5e8*t     } ;
+boundaryConds(2).loadsTimeFact = @(t) 1.5e8*t ;
 ```
  and the analysis is run
 ```
