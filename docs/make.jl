@@ -36,6 +36,7 @@ elseif outputFormat == "html"
                                     "Cantilever Beam" => "cantileverBeam.md"],
       "User guide" => Any["Installation" =>  "howtouse/install.md",
                           "Creating Models"  => "howtouse/creatingModels.md",
+                          "Corotational frame"  => "corotationalFrameElement.md",
                           "References"  => "theory/references.md"]
       #"Developer guide" => Any["ONSAS_solve" =>  "ONSAS_solve.md"]
     ],

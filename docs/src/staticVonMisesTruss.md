@@ -49,7 +49,7 @@ materials.hyperElasParams = [ E nu ] ;
 
 Two different types of elements are required to create the model: `node` and `truss`, thus, the `elements` struct will have two entries. The type of the first entry is
 ```
-elements(1).elemType = 'node';
+elements(1).elemType = 'node' ;
 ```
  and the second entry is
 ```
@@ -65,7 +65,7 @@ elements(2).elemTypeParams = 1 ;
 
  The elements are submitted to two different BoundaryConditions, then the struct `boundaryConds` will have length two.
  The nodes $1$ and $3$ are fixed, without loads applied (this is the first BC), and node $2$ has a constraint in displacement and an applied load (second BC).
- For the displacements, the first BC corresponds with the all displacement degrees of freedom set to zero,
+ For the displacements, the first BC corresponds to a xyz-fixed displacement,
 
 ```
 boundaryConds(1).imposDispDofs = [ 1 3 5 ] ;
@@ -141,6 +141,7 @@ analysisSettings.finalTime      =   1    ;
 ### otherParams
 ```
 otherParams.problemName = 'staticVonMisesTruss_NR_RotEng';
+otherParams.plotsFormat = 'vtk' ;
 otherParams.controlDofs = [2 5 ];
 ```
 

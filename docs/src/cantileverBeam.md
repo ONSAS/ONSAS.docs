@@ -103,7 +103,7 @@ end
 ```
 analysisSettings.methodName    = 'newtonRaphson' ;
 analysisSettings.deltaT        =   0.1  ;
-analysisSettings.finalTime     =   1.0  ;
+analysisSettings.finalTime      =   0.2  ;
 analysisSettings.stopTolDeltau =   1e-6 ;
 analysisSettings.stopTolForces =   1e-6 ;
 analysisSettings.stopTolIts    =   10   ;
@@ -113,13 +113,14 @@ analysisSettings.stopTolIts    =   10   ;
 ```
 otherParams.problemName = 'uniformCurvatureCantilever';
 otherParams.controlDofs = [ numElements+1  4 ] ;
+otherParams.plotsFormat = 'vtk' ;
 ```
 ## Analysis case 1: NR with Rotated Eng Strain
  In the first case ONSAS is run and the solution at the dof (angle of node B) of interest is stored:
 ```
 [matUs, loadFactorsMat] = ONSAS( materials, elements, boundaryConds, initialConds, mesh, analysisSettings, otherParams ) ;
-
 ```
+
  the control dof to verificate the solution is the node angle B, this corresponds to the following dof number:
 ```
 angleControlDof      = (numElements+1)*6 - 2;
@@ -136,7 +137,7 @@ analyticLoadFactorsNREngRot = @(w) E * Iy * w / l ;
 ```
 verifBoolean = norm( analyticLoadFactorsNREngRot( controlDispsNREngRot) ...
                      - loadFactorsNREngRot' )  ...
-                    < ( norm( analyticLoadFactorsNREngRot( controlDispsNREngRot) ) * 1e-4 )
+                    < ( norm( analyticLoadFactorsNREngRot( controlDispsNREngRot) ) * 1e-4 ) ;
 ```
 
 

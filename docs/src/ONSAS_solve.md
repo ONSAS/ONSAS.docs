@@ -27,7 +27,7 @@ while finalTimeReachedBoolean == false
 
   % check if final time was reached
   finalTimeReachedBoolean = ( modelNextSol.currTime - modelProperties.analysisSettings.finalTime ) ...
-                        >= ( -(modelProperties.analysisSettings.finalTime) * 1e-8 ) ;
+                        >= ( -(modelProperties.analysisSettings.finalTime) * 1e-8 )
 
   % store results and update structs
   modelCurrSol   =   modelNextSol ;
@@ -36,7 +36,7 @@ while finalTimeReachedBoolean == false
 
   % generate vtk file for the new state
   if strcmp( modelProperties.plotsFormat, 'vtk' )
-    vtkMainWriter( modelCurrSol, modelProperties )
+    vtkMainWriter( modelCurrSol, modelProperties );
   end % if vtk output format
 
 end %while time

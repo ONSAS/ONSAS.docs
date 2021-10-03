@@ -22,5 +22,5 @@ then
   evince docs/build/ONSAS.m.pdf
 elif [ $1 = html ]
 then
-  epiphany docs/build/index.html
+  firefox docs/build/index.html
 fi
